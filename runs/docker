@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+## DNF
+## https://docs.docker.com/engine/install/fedora/#install-using-the-repository
+
+# Update system and install prerequisites
+sudo dnf -y upgrade
+
+sudo dnf -y install dnf-plugins-core
+
+# Add Docker repository
+sudo dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+
+# Install Docker
+sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# Start and enable Docker service
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# Add user to docker group
+sudo groupadd docker
+sudo usermod -aG docker $USER

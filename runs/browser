@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+sudo dnf upgrade -y
+
+# Google Chrome
+sudo dnf install -y google-chrome-stable
+
+# Brave
+curl -fsS https://dl.brave.com/install.sh | sh
