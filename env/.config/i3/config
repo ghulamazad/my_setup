@@ -319,10 +319,6 @@ exec_always --no-startup-id pactl load-module module-switch-on-connect
 exec --no-startup-id xrandr --output HDMI-1 --auto --left-of eDP-1
 # exec --no-startup-id autorandr --change
 
-# Autostart
-exec_always --no-startup-id picom -b
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-
 
 workspace 1 output HDMI-1
 workspace 2 output HDMI-1
