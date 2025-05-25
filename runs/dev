@@ -11,7 +11,10 @@ sudo dnf install -y   https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-r
 sudo dnf upgrade -y
 
 # Install Nvidia Driver
-sudo dnf install -y git nvidia-driver go jetbrains-mono-fonts cmake
+sudo dnf install -y git nvidia-driver go cmake
+
+# Install fonts
+sudo dnf install jetbrains-mono-fonts fira-code-fonts
 
 go install github.com/air-verse/air@latest
 
@@ -28,3 +31,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # sudo dnf install -y \
 #     lua \
+
+
+# Install icons pack
+sudo dnf install papirus-icon-theme

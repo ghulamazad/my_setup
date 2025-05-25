@@ -1,2 +1,11 @@
-@theme "/usr/share/rofi/themes/gruvbox-dark-hard.rasi"
+configuration {
+    display-drun: "Applications:";
+    display-window: "Windows:";
+    drun-display-format: "{icon} {name}";
+    font: "JetBrains Mono 12";
+    modi: "window,run,drun";
+    show-icons: true;
+    icon-theme: "Papirus-Dark";
+}
 
+@theme "~/.config/rofi/mytheme.rasi"

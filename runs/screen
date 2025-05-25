@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+echo "Xft.dpi: 120" > ~/.Xresources
+xrdb -merge ~/.Xresources
+echo "export GDK_SCALE=1.25" >> ~/.bashrc
+echo "export QT_SCALE_FACTOR=1.25" >> ~/.bashrc
+source ~/.bashrc

@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
+sudo dnf upgrade -y
+
 # i3
-# sudo apt install i3-wm
-# sudo apt install i3
+sudo dnf install i3 i3status polybar rofi picom
 
 # Sway
-sudo dnf install -y sway waybar dunst wlogout rofi-wayland 
+# sudo dnf install -y sway waybar dunst wlogout rofi-wayland 
