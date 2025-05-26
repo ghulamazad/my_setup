@@ -1,6 +1,8 @@
 export XDG_CONFIG_HOME=$HOME/.config
 VIM="nvim"
 
+alias vim="$VIM"
+
 Alien=$XDG_CONFIG_HOME/Alien
 DEV_ENV=$HOME/dev
 for i in `find -L $Alien`; do
