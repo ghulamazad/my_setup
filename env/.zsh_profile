@@ -2,12 +2,13 @@ export XDG_CONFIG_HOME=$HOME/.config
 VIM="nvim"
 
 alias vim="$VIM"
+alias v="$VIM"
 
-Alien=$XDG_CONFIG_HOME/Alien
-DEV_ENV=$HOME/dev
-for i in `find -L $Alien`; do
-    source $i
-done
+# Alien=$XDG_CONFIG_HOME/Alien
+# DEV_ENV=$HOME/dev
+# for i in `find -L $Alien`; do
+#     source $i
+# done
 
 ## All that sweet sweet fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -21,7 +22,6 @@ dev_env() {
 
 }
 
-# Where should I put you?
 bindkey -s ^f "tmux-sessionizer\n"
 
 catr() {
@@ -57,7 +57,7 @@ addToPathFront /usr/local/go/bin
 addToPath $HOME/.cargo/bin
 addToPath $HOME/.local/Alien
 addToPath $HOME/.sst/bin
-addToPathFront $HOME/.local/zig true # some how zig-0.13 just keeps getting added and i CANNOT find it anywhere
+addToPathFront $HOME/.local/zig true 
 
-# thanks gt
+
 alias gt='NODE_OPTIONS="--no-deprecation" gt'
