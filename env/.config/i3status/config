@@ -15,6 +15,7 @@ order += "disk /"
 order += "load"
 order += "memory"
 order += "battery all"
+order += "volume master"
 order += "tztime local"
 
 battery all {
@@ -37,4 +38,13 @@ memory {
     format = "RAM: %used"
     threshold_degraded = "1G"
     format_degraded = "MEMORY < %available"
+}
+
+
+volume master {
+        format = "♪: %volume"
+        format_muted = "♪: muted (%volume)"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
 }
