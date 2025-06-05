@@ -70,4 +70,9 @@ copy $DEV_ENV/env/.xprofile $HOME/.xprofile
 copy $DEV_ENV/env/.tmux-sessionizer $HOME/.tmux-sessionizer
 copy $DEV_ENV/dev-env $HOME/.local/scripts/dev-env
 
+# Provide the permission
 sudo chmod +x ~/.local/scripts/*
+chmod +x ~/.config/polybar/launch.sh
+chmod +x ~/.config/polybar/scripts/calendar
+chmod +x ~/.config/polybar/scripts/fedora-updates.sh
+chmod +x ~/.config/polybar/scripts/playerctl.sh

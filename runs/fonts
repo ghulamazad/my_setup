@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# Directory to store downloaded and extracted fonts
+FONT_DIR="$HOME/.local/share/fonts"
+
+# Create fonts directory if it doesn't exist
+echo "Checking for fonts directory at $FONT_DIR..."
+if [ ! -d "$FONT_DIR" ]; then
+  echo "Fonts directory does not exist. Creating it..."
+  mkdir -p "$FONT_DIR"
+else
+  echo "Fonts directory already exists."
+fi
+
+echo "Downloading Meslo Nerd Font..."
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Meslo.zip -O /tmp/meslo.zip
+
+echo "Extracting fonts to $FONT_DIR..."
+unzip -o /tmp/meslo.zip -d $FONT_DIR
+
+echo "Downloading JetBrains Mono Nerd Font..."
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip -O /tmp/JetBrainsMono.zip
+
+echo "Extracting fonts to $FONT_DIR..."
+unzip -o /tmp/JetBrainsMono.zip -d $FONT_DIR
+
+# Refresh the font cache
+echo "Refreshing font cache..."
+fc-cache -fv
