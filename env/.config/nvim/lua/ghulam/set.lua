@@ -28,6 +28,4 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
-vim.opt.colorcolumn = "200"
-
-
+vim.opt.colorcolumn = "80"
