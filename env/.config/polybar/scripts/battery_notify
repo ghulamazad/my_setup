@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Path to the battery capacity file
+BATTERY="/sys/class/power_supply/BAT0/capacity"
+STATUS="/sys/class/power_supply/BAT0/status"
+
+# Read battery percentage and status
+CAPACITY=$(cat "$BATTERY")
+STATUS=$(cat "$STATUS")
+
+# Check if battery is discharging and below 12%
+if [ "$STATUS" = "Discharging" ] && [ "$CAPACITY" -lt 12 ]; then
+    notify-send -u critical "Low Battery" "Battery is at ${CAPACITY}%! Please connect the charger."
+fi
