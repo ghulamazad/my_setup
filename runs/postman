@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Update system packages
+echo "Updating system packages..."
+sudo dnf update -y
+
+$HOME/.local
+
+# Check if Postman is already installed
+if [ -d "$HOME/.local/postman" ] || command -v postman &> /dev/null; then
+    echo "Existing Postman installation found. Removing it..."
+    # Remove Postman directory
+    sudo rm -rf $HOME/.local/postman
+    # Remove symbolic link
+    sudo rm -f /usr/bin/postman
+    # Remove desktop entry
+    sudo rm -f /usr/share/applications/postman.desktop
+    echo "Existing Postman installation removed."
+fi
+
+# Download latest Postman Linux tarball
+echo "Downloading Postman..."
+wget https://dl.pstmn.io/download/latest/linux64 -O /tmp/postman.tar.gz
+
+# Extract Postman to $HOME/.local/postman
+mkdir -p $HOME/.local/postman
+
+echo "Extracting Postman..."
+sudo tar -xzf /tmp/postman.tar.gz -C $HOME/.local/postman --strip-components=1
+
+# Remove downloaded tarball
+rm /tmp/postman.tar.gz
+
+# Create desktop entry
+echo "Creating desktop entry..."
+cat << EOF | sudo tee /usr/share/applications/postman.desktop
+[Desktop Entry]
+Name=Postman
+GenericName=API Client
+Comment=Test and develop APIs
+Exec=$HOME/.local/postman/Postman
+Terminal=false
+Type=Application
+Icon=$HOME/.local/postman/app/resources/app/assets/icon.png
+Categories=Development;Utilities;
+EOF
+
+# Set permissions
+echo "Setting permissions..."
+sudo chmod +x $HOME/.local/postman/Postman
+sudo chmod 644 /usr/share/applications/postman.desktop
+
+# Create symbolic link for command line access
+echo "Creating symbolic link..."
+sudo ln -sf $HOME/.local/postman/Postman /usr/bin/postman
+
+echo "Postman installation completed!"
+echo "You can start Postman by typing 'postman' in the terminal or from the applications menu."
