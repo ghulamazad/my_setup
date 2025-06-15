@@ -1,15 +1,19 @@
 #!/usr/bin/env bash
+# This script installs Ghostty, a terminal emulator, on a Fedora system.
+# sudo dnf upgrade -y
+# sudo dnf -y install llvm lld llvm-dev liblld-dev clang libclang-dev libglib2.0-dev libgtk-4-dev libadwaita-1-dev git libgtk-4-devel libadwaita-devel
 
-sudo dnf upgrade -y
-sudo dnf -y install llvm lld llvm-dev liblld-dev clang libclang-dev libglib2.0-dev libgtk-4-dev libadwaita-1-dev git
+# wget https://ziglang.org/download/0.14.0/zig-linux-x86_64-0.14.0.tar.xz -O /tmp/zig.tar.xz
+# tar -xvf /tmp/zig.tar.xz -C $HOME/.local
+# export PATH="$HOME/.local/zig-linux-x86_64-0.14.0:$PATH"
 
-wget https://ziglang.org/download/0.14.0/zig-linux-x86_64-0.14.0.tar.xz -O /tmp/zig.tar.xz
-tar -xvf /tmp/zig.tar.xz -C $HOME/.local
-export PATH="$HOME/.local/zig-linux-x86_64-0.14.0:$PATH"
+# git clone git@github.com:ghostty-org/ghostty.git $HOME/Alien/ghostty
 
-git clone git@github.com:ghostty-org/ghostty.git $HOME/Alien/ghostty
+# (
+# cd $HOME/Alien/ghostty
+# zig build -p $HOME/.local -Doptimize=ReleaseFast
+# )
 
-(
-cd $HOME/Alien/ghostty
-zig build -p $HOME/.local -Doptimize=ReleaseFast
-)
+
+dnf copr enable pgdev/ghostty
+dnf install ghostty
