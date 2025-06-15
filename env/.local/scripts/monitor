@@ -6,10 +6,10 @@ HDMI_STATUS=$(xrandr --verbose | grep "HDMI-1" | grep "connected")
 # If HDMI-1 is connected
 if [ -n "$HDMI_STATUS" ]; then
     # Configure HDMI-1 to the left of eDP-1
-    xrandr --output HDMI-1 --auto --left-of eDP-1 --dpi 140
+    xrandr --output HDMI-1-0 --auto --left-of eDP-1 # --dpi 140
 else
     # If HDMI-1 is not connected, disable it
-    xrandr --output HDMI-1 --off
+    xrandr --output HDMI-1-0 --off
     # You can add other configurations here if needed, like centering eDP-1 or whatever you'd like.
 fi
 

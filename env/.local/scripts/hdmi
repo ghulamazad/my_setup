@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
-xrandr --output eDP-1 --scale-from 3840x2160 --scale 1920x1080
-xrandr --output HDMI-1 --off
-xrandr --output HDMI-1 --auto
+# Script to duplicate the screen on eDP-1 and HDMI-1-0
 
+# Ensure eDP-1 (laptop screen) is active and set to its native resolution
+xrandr --output eDP-1 --auto --primary
 
+# Turn off HDMI-1-0 to reset its state
+xrandr --output HDMI-1-0 --off
+
+# Duplicate eDP-1 on HDMI-1-0 (mirror the display)
+xrandr --output HDMI-1-0 --auto --same-as eDP-1
