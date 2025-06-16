@@ -11,7 +11,7 @@ sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-rel
 sudo dnf upgrade -y
 
 # Install Nvidia Driver
-sudo dnf install -y git nvidia-driver go cmake unzip
+sudo dnf install -y git nvidia-driver go unzip
 
 # Install fonts
 sudo dnf install jetbrains-mono-fonts fira-code-fonts
