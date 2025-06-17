@@ -13,7 +13,7 @@ sudo dnf install -y "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-re
 sudo dnf upgrade -y
 
 # Install Nvidia Driver
-sudo dnf install -y git nvidia-driver go unzip
+sudo dnf install -y git nvidia-driver go unzip lua lua-devel luarocks
 
 # Install fonts
 sudo dnf install jetbrains-mono-fonts fira-code-fonts
@@ -30,9 +30,6 @@ sudo dnf upgrade -y
 
 # Install rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-# sudo dnf install -y \
-#     lua \
 
 
 # Install icons pack
