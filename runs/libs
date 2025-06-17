@@ -25,3 +25,5 @@ sudo dnf -y install \
 
 
 # ffmpeg \ -- no longer available in Fedora 39
+# Install multimedia group
+sudo dnf group install multimedia
