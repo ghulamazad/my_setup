@@ -16,8 +16,12 @@ sudo dnf -y install \
   btop \
   bc \
   alsa-lib-devel \
-  ffmpeg \
   curl \
   vlc \
   make \
-  cmake
+  cmake \
+  blueman \
+  fzf
+
+
+# ffmpeg \ -- no longer available in Fedora 39
