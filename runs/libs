@@ -22,7 +22,18 @@ sudo dnf -y install \
   cmake \
   blueman \
   fzf \
-  brightnessctl
+  brightnessctl \
+  util-linux \
+  nwg-displays \
+  nwg-look \
+  xdg-utils \
+  playerctl \
+  pavucontrol \
+  pipewire-alsa \
+  pipewire-utils \
+  network-manager-applet \
+  jq \
+  
 
 
 # ffmpeg \ -- no longer available in Fedora 39

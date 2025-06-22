@@ -3,7 +3,10 @@
 sudo dnf upgrade -y
 
 # i3
-sudo dnf install i3 i3status polybar rofi picom nitrogen
+# sudo dnf install i3 i3status polybar rofi picom nitrogen
 
 # Sway
 # sudo dnf install -y sway waybar dunst wlogout rofi-wayland 
+
+# Hyprland
+sudo dnf install -y hyprland hyprlock hypridle waybar wallust hyprpaper hyprshot wlogout rofi-wayland
