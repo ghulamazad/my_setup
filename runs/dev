@@ -1,15 +1,5 @@
 #!/usr/bin/env bash
 
-# Enable RPMFusion (free and non-free).
-# sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-
-sudo dnf install -y "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm" "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
-
-
-# Speed-up DNF Package Manager
-# echo 'fastestmirror=True' | sudo tee -a /etc/dnf/dnf.conf
-# echo 'max_parallel_downloads=10' | sudo tee -a /etc/dnf/dnf.conf
-
 sudo dnf upgrade -y
 
 # Install

@@ -6,8 +6,21 @@ if [ -z "$DEV_ENV" ]; then
     exit 1
 fi
 
-# if i just did DEV_ENV=$(pwd) ./run then this is needed for the rest of the
-# scripts
+# Source the global functions script
+if ! source "$script_dir/Global_functions"; then
+  echo "Failed to source Global_functions"
+  exit 1
+fi
+
+# Verify install_package exists
+if ! declare -f install_package > /dev/null; then
+    echo "Error: install_package function not found in Global_functions"
+    exit 1
+fi
+
+# Export the install_package function
+export -f install_package
+
 export DEV_ENV="$DEV_ENV"
 
 grep=""
@@ -31,66 +44,18 @@ log() {
     fi
 }
 
-log "RUN: env: $env -- grep: $grep"
+log "RUN: env: $DEV_ENV -- grep: $grep"
 
-runs_dir=`find $script_dir/runs -mindepth 1 -maxdepth 1 -executable`
+runs_dir=$(find "$script_dir/runs" -mindepth 1 -maxdepth 1 -executable)
 
 for s in $runs_dir; do
-    if basename $s | grep -vq "$grep"; then
+    if basename "$s" | grep -vq "$grep"; then
         log "grep \"$grep\" filtered out $s"
         continue
     fi
 
     log "running script: $s"
-
     if [[ $dry_run == "0" ]]; then
-        $s
+        bash -c "$s"  # Explicitly run in a new bash shell
     fi
 done
-
-#remove_files() {
-#    pushd $1
-#    (
-#        configs=`find . -mindepth 1 -maxdepth 1 -type d`
-#        if [[ $dry_run == "1" ]]; then
-#            echo "[DRY_RUN]: removing: $configs"
-#        else
-#            echo "removing: $configs"
-#        fi
-#
-#        for c in $configs; do
-#            directory=${2%/}/${c}
-#            if [[ $dry_run == "1" ]]; then
-#                echo "[DRY_RUN]:    removing: $directory"
-#            else
-#                echo "    removing: $directory"
-#                rm -rf $directory
-#            fi
-#        done
-#
-#        if [[ $dry_run == "1" ]]; then
-#            echo "copying env: $2"
-#        else
-#            echo "copying env: $2"
-#            cp -r ./* $2
-#        fi
-#    )
-#    popd
-#}
-
-#run_env() {
-#    pushd $script_dir
-#    echo "removing ~config"
-#    remove_files env/.config $XDG_CONFIG_HOME
-#
-#    echo "removing ~local"
-#    remove_files env/.local $HOME/.local
-#
-#    echo "copying zsh"
-#    if [[ $dry_run == "0" ]]; then
-#        cp $script_dir/env/.zshrc ~/.zshrc
-#        cp $script_dir/env/.zsh_profile ~/.zsh_profile
-#    fi
-#
-#    popd
-#}

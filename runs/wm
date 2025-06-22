@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-sudo dnf upgrade -y
-
 # i3
 # sudo dnf install i3 i3status polybar rofi picom nitrogen
 
@@ -9,4 +7,24 @@ sudo dnf upgrade -y
 # sudo dnf install -y sway waybar dunst wlogout rofi-wayland 
 
 # Hyprland
-sudo dnf install -y hyprland hyprlock hypridle waybar wallust hyprpaper hyprshot wlogout rofi-wayland
+hypr=(
+  hyprland
+  hypridle
+  hyprlock
+  waybar 
+  wallust 
+  hyprpaper 
+  hyprshot 
+  wlogout 
+  rofi-wayland 
+  nwg-displays 
+  nwg-look
+)
+
+# Hyprland
+printf "Installing Hyprland packages .......\n"
+for HYPR in "${hypr[@]}"; do
+  install_package "$HYPR" "$LOG"
+done
+
+printf "\n%.0s" {1..2}

@@ -4,7 +4,7 @@
 ## https://docs.docker.com/engine/install/fedora/#install-using-the-repository
 
 # Update system and install prerequisites
-sudo dnf -y upgrade
+sudo dnf -y update
 
 sudo dnf -y install dnf-plugins-core
 
