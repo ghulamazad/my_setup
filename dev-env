@@ -74,3 +74,4 @@ copy $DEV_ENV/dev-env $HOME/.local/scripts/dev-env
 sudo chmod +x ~/.local/scripts/*
 sudo chmod +x $HOME/.config/hypr/scripts/*
 sudo chmod +x $HOME/.config/hypr/UserScripts/*
+hyprctl reload
