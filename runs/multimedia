@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Multimedia on Fedora
+
+sudo dnf swap ffmpeg-free ffmpeg --allowerasing -y
+
+sudo dnf update -y @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
+
+sudo dnf install -y intel-media-driver
+
