@@ -19,6 +19,10 @@ hypr=(
   rofi-wayland 
   nwg-displays 
   nwg-look
+  cava
+  SwayNotificationCenter
+  pamixer
+  swww
 )
 
 # Hyprland
