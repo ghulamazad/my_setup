@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+# Exit on any error
+set -e
+
+echo "Starting cooling setup for Fedora 42 with Hyprland..."
+
+# Update system
+echo "Updating system packages..."
+sudo dnf update -y
+
+# Install dnf-plugins-core
+echo "Installing dnf-plugins-core..."
+sudo dnf install -y dnf-plugins-core
+
+# Install CoolerControl
+echo "Enabling CoolerControl Copr repository..."
+sudo dnf copr enable -y codifryed/CoolerControl
+
+echo "Installing CoolerControl..."
+sudo dnf install -y coolercontrol
+
+echo "Enabling and starting CoolerControl daemon..."
+sudo systemctl enable --now coolercontrold
+
+# Install TLP
+echo "Installing TLP..."
+sudo dnf install -y tlp
+
+echo "Disabling tuned to avoid conflicts..."
+sudo systemctl disable --now tuned || echo "Tuned was not active."
+
+echo "Enabling and starting TLP..."
+sudo systemctl enable --now tlp
+
+# Install lm-sensors
+echo "Installing lm-sensors..."
+sudo dnf install -y lm-sensors
+
+echo "Running sensors-detect (follow prompts)..."
+sudo  sensors-detect --auto
