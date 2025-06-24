@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Install Zsh
-sudo dnf install -y zsh
+sudo apt-get install -y zsh
 
 # Clear command hash
 hash -r

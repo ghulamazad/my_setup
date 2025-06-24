@@ -1,19 +1,29 @@
 #!/usr/bin/env bash
-# This script installs Ghostty, a terminal emulator, on a Fedora system.
-# sudo dnf upgrade -y
-# sudo dnf -y install llvm lld llvm-dev liblld-dev clang libclang-dev libglib2.0-dev libgtk-4-dev libadwaita-1-dev git libgtk-4-devel libadwaita-devel
+# This script installs Ghostty, a terminal emulator, on an Ubuntu 24.04 system.
 
-# wget https://ziglang.org/download/0.14.0/zig-linux-x86_64-0.14.0.tar.xz -O /tmp/zig.tar.xz
-# tar -xvf /tmp/zig.tar.xz -C $HOME/.local
-# export PATH="$HOME/.local/zig-linux-x86_64-0.14.0:$PATH"
+# Update package index
+sudo apt-get update
 
-# git clone git@github.com:ghostty-org/ghostty.git $HOME/Alien/ghostty
+# Install prerequisites
+sudo apt-get install -y llvm lld clang libclang-dev libglib2.0-dev libgtk-4-dev libadwaita-1-dev git
 
-# (
-# cd $HOME/Alien/ghostty
-# zig build -p $HOME/.local -Doptimize=ReleaseFast
-# )
+# Download and extract Zig
+wget https://ziglang.org/download/0.14.0/zig-linux-x86_64-0.14.0.tar.xz -O /tmp/zig.tar.xz
+tar -xvf /tmp/zig.tar.xz -C $HOME/.local
 
+# Add Zig to PATH for this session
+export PATH="$HOME/.local/zig-linux-x86_64-0.14.0:$PATH"
 
-sudo dnf copr enable pgdev/ghostty
-sudo dnf install ghostty
+# Add Zig to PATH permanently (if not already in ~/.bashrc)
+if ! grep -q 'export PATH=$PATH:$HOME/.local/zig-linux-x86_64-0.14.0' ~/.bashrc; then
+    echo 'export PATH=$PATH:$HOME/.local/zig-linux-x86_64-0.14.0' >> ~/.bashrc
+fi
+
+# Clone Ghostty repository
+git clone git@github.com:ghostty-org/ghostty.git $HOME/Alien/ghostty
+
+# Build and install Ghostty
+(
+    cd $HOME/Alien/ghostty
+    zig build -p $HOME/.local -Doptimize=ReleaseFast
+)

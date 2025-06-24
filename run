@@ -6,21 +6,6 @@ if [ -z "$DEV_ENV" ]; then
     exit 1
 fi
 
-# Source the global functions script
-if ! source "$script_dir/Global_functions"; then
-  echo "Failed to source Global_functions"
-  exit 1
-fi
-
-# Verify install_package exists
-if ! declare -f install_package > /dev/null; then
-    echo "Error: install_package function not found in Global_functions"
-    exit 1
-fi
-
-# Export the install_package function
-export -f install_package
-
 export DEV_ENV="$DEV_ENV"
 
 grep=""

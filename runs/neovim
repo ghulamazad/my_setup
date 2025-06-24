@@ -1,17 +1,25 @@
 #!/usr/bin/env bash
+# This script installs Neovim, Lua tools, and Go debugger for Ubuntu 24.04 with i3.
 
-sudo dnf -y upgrade
+# Update package index
+sudo apt-get update
 
-sudo dnf install -y neovim python3-neovim lua lua-devel luarocks
+# Install prerequisites
+sudo apt-get install -y neovim tmux python3-pynvim lua5.4 liblua5.4-dev luarocks rustc cargo golang-go
 
+# Install stylua via cargo
 cargo install stylua
 
-wget https://luarocks.org/releases/luarocks-3.11.1.tar.gz
-tar zxpf luarocks-3.11.1.tar.gz
-cd luarocks-3.11.1
-./configure && make && sudo make install
+# Install luacheck via luarocks
 sudo luarocks install luacheck
 
-
-# For DAP (debugger)
+# Install Delve (Go debugger)
 go install github.com/go-delve/delve/cmd/dlv@latest
+
+# Add Go and Rust binaries to PATH (if not already in ~/.bashrc)
+if ! grep -q 'export PATH=$PATH:$HOME/go/bin:$HOME/.cargo/bin' ~/.bashrc; then
+    echo 'export PATH=$PATH:$HOME/go/bin:$HOME/.cargo/bin' >> ~/.bashrc
+fi
+
+# Add newline for clean output
+printf "\n%.0s" {1..2}

@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 
-sudo dnf upgrade -y
+# Update package index
+sudo apt-get update
 
-# Install
-sudo dnf install -y git go unzip lua lua-devel luarocks
+# Install required packages
+sudo apt-get install -y git golang-go unzip lua5.4 liblua5.4-dev luarocks curl wget
+
+# Enable universe repository for fonts (if not already enabled)
+sudo add-apt-repository universe -y
+sudo apt-get update
 
 # Install fonts
-sudo dnf install jetbrains-mono-fonts fira-code-fonts
+sudo apt-get install -y fonts-jetbrains-mono fonts-firacode
 
+# Install air using Go
 go install github.com/air-verse/air@latest
 
 # Git global config
@@ -15,12 +21,9 @@ git config --global user.email "iamghulamazad@gmail.com"
 git config --global user.name "Muhammad Ghulam Azad Ansari"
 
 
-# Programming language
-sudo dnf upgrade -y
-
 # Install rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 
 # Install icons pack
-sudo dnf install papirus-icon-theme
+sudo apt-get install papirus-icon-theme
