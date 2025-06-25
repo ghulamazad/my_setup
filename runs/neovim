@@ -12,7 +12,7 @@ if [ ! -d $HOME/neovim ]; then
     git clone https://github.com/neovim/neovim.git $HOME/neovim
 fi
 
-sudo apt -y install cmake gettext lua5.1 liblua5.1-0-dev
+sudo apt -y install cmake gettext lua5.1 liblua5.1-0-dev rustc cargo golang-go
 
 
 git -C ~/neovim fetch --all
@@ -27,3 +27,6 @@ tar zxpf luarocks-3.11.1.tar.gz
 cd luarocks-3.11.1
 ./configure && make && sudo make install
 sudo luarocks install luacheck
+
+# Install Delve (Go debugger)
+go install github.com/go-delve/delve/cmd/dlv@latest
