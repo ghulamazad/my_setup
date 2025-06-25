@@ -1,60 +1,46 @@
-#!/usr/bin/env bash
-# This script installs utilities and development tools for Ubuntu 24.04 with i3.
+#!/bin/bash
+# Simple script to install utilities and tools for Ubuntu 24.04 with i3.
 
-# Update package index
-sudo apt-get update
-
-# Enable universe and multiverse repositories
+# Update package index and enable repositories
+echo "Updating package index and enabling repositories..."
+sudo apt-get update -y
 sudo add-apt-repository universe -y
 sudo add-apt-repository multiverse -y
-sudo apt-get update
+sudo apt-get update -y
 
-# Install useful utilities and development tools for i3
-pkgs=(
-  unzip
-  ripgrep
-  pavucontrol
-  xclip
-  jq
-  tldr
-  python3
-  fzf
-  btop
-  bc
-  curl
-  vlc  
-  make
-  cmake
-  blueman
-  brightnessctl
-  util-linux
-  xdg-utils
-  playerctl
-  pipewire
-  pipewire-bin
-  network-manager-gnome
-  flameshot  
-  i3lock    
-)
+# Install utilities and development tools
+echo "Installing packages..."
+sudo apt-get install -y \
+    unzip \
+    ripgrep \
+    pavucontrol \
+    xclip \
+    jq \
+    tldr \
+    python3 \
+    fzf \
+    btop \
+    bc \
+    curl \
+    vlc \
+    make \
+    cmake \
+    blueman \
+    brightnessctl \
+    xdg-utils \
+    playerctl \
+    pipewire \
+    pipewire-bin \
+    network-manager-gnome \
+    flameshot \
+    i3lock \
+    ubuntu-restricted-extras \
+    ffmpeg
 
-# Function to install a package with error handling
-install_package() {
-  local pkg="$1"
-  if ! dpkg -l "$pkg" >/dev/null 2>&1; then
-    echo "Installing $pkg..."
-    sudo apt-get install -y "$pg" || echo "Failed to install $pkg. Check if it's available or requires a PPA."
-  else
-    echo "$pkg is already installed."
-  fi
-}
-
-# Install each package
-for PKG1 in "${pkgs[@]}"; do
-  install_package "$PKG1"
-done
-
-# Install multimedia support
-sudo apt-get install -y ubuntu-restricted-extras ffmpeg
+# Verify PipeWire and Bluetooth services
+echo "Verifying PipeWire and Bluetooth services..."
+systemctl --user status pipewire pipewire-pulse
+sudo systemctl status bluetooth
 
 # Add newline for clean output
 printf "\n%.0s" {1..2}
