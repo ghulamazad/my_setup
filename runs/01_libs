@@ -37,10 +37,6 @@ sudo apt-get install -y \
     ubuntu-restricted-extras \
     ffmpeg
 
-# Verify PipeWire and Bluetooth services
-echo "Verifying PipeWire and Bluetooth services..."
-systemctl --user status pipewire pipewire-pulse
-sudo systemctl status bluetooth
 
 # Add newline for clean output
 printf "\n%.0s" {1..2}
