@@ -5,7 +5,8 @@
 sudo apt-get update
 
 # Install prerequisites
-sudo apt-get install -y llvm lld clang libclang-dev libglib2.0-dev libgtk-4-dev libadwaita-1-dev git
+sudo apt install -y libgtk-4-dev libadwaita-1-dev git blueprint-compiler gettext libxml2-utils build-essential
+
 
 # Download and extract Zig
 wget https://ziglang.org/download/0.14.0/zig-linux-x86_64-0.14.0.tar.xz -O /tmp/zig.tar.xz
