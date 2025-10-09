@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # i3
-sudo dnf install i3 i3status polybar rofi picom nitrogen dunst
+sudo apt-get install i3 i3status polybar rofi picom nitrogen dunst
 
 # Sway
-# sudo dnf install -y sway waybar dunst wlogout rofi-wayland 
+# sudo dnf install -y sway waybar dunst wlogout rofi-wayland
 
