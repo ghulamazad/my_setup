@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# =============================================================================
+# python — Python setup for Arch Linux 2026
+# =============================================================================
+set -e
+
+echo "Installing Python..."
+
+sudo pacman -S --needed --noconfirm \
+    python \
+    python-pip \
+    python-virtualenv \
+    python-poetry
+
+# pyenv — manage multiple python versions
+yay -S --needed --noconfirm pyenv
+
+# Add pyenv to shell
+if ! grep -q "pyenv" ~/.zshrc; then
+    cat >> ~/.zshrc << 'EOF'
+
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+EOF
+fi
+
+echo "Python installed! Version: $(python --version)"

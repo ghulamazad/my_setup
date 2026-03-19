@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# =============================================================================
+# fonts — Fonts for Arch Linux 2026
+# ==> JetBrains Mono Nerd Font, Meslo Nerd Font, noto-fonts-emoji for emoji support
+# =============================================================================
+set -e
+
+echo "Installing fonts..."
+
+sudo pacman -S --needed --noconfirm \
+    ttf-jetbrains-mono \
+    ttf-jetbrains-mono-nerd \
+    ttf-meslo-nerd \
+    noto-fonts \
+    noto-fonts-emoji \
+    ttf-liberation \
+    ttf-dejavu \
+    ttf-font-awesome
+
+# Refresh font cache
+fc-cache -fv
+
+echo "Fonts installed!"

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# =============================================================================
+# browser — Browser setup for Arch Linux 2026
+# =============================================================================
+set -e
+
+echo "Installing browsers..."
+
+# Google Chrome — via AUR
+yay -S --needed --noconfirm google-chrome
+
+# Brave — via AUR (replaces official install script)
+yay -S --needed --noconfirm brave-bin
+
+echo "Browsers installed!"
+echo "  Chrome: google-chrome-stable"
+echo "  Brave:  brave"

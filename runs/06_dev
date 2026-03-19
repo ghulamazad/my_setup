@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# =============================================================================
+# dev — Developer tools for Arch Linux 2026
+# =============================================================================
+set -e
+
+echo "Installing developer tools..."
+
+sudo pacman -S --needed --noconfirm \
+    git \
+    go \
+    lua \
+    luarocks \
+    base-devel \
+    curl \
+    wget \
+    rustup \
+    cmake \
+    clang \
+    gcc \
+    gdb
+
+# Rust via rustup (replaces direct curl install — cleaner on Arch)
+rustup default stable
+
+# air — Go live reload (same as before, via go install)
+go install github.com/air-verse/air@latest
+
+# Git global config
+git config --global user.email "iamghulamazad@gmail.com"
+git config --global user.name "Muhammad Ghulam Azad Ansari"
+git config --global init.defaultBranch main
+git config --global core.editor nvim
+git config --global pull.rebase false
+
+# SSH key
+if [ ! -f ~/.ssh/id_ed25519 ]; then
+    ssh-keygen -t ed25519 -C "iamghulamazad@gmail.com" -f ~/.ssh/id_ed25519 -N ""
+    echo "SSH key generated — add to GitHub:"
+    cat ~/.ssh/id_ed25519.pub
+fi
+
+echo "Developer tools installed!"

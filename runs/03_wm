@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# =============================================================================
+# wm — Window Manager setup for Arch Linux 2026
+# =============================================================================
+set -e
+
+echo "Installing window manager and tools..."
+
+sudo pacman -S --needed --noconfirm \
+    i3-wm \
+    i3status \
+    i3lock \
+    polybar \
+    rofi \
+    picom \
+    feh \
+    dunst \
+    libnotify \
+    xdg-user-dirs \
+    lxappearance \
+    arandr \
+    papirus-icon-theme \
+    ttf-font-awesome
+
+# wlogout — for power menu (replaces custom scripts)
+yay -S --needed --noconfirm wlogout
+
+echo "Window manager tools installed!"

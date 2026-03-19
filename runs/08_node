@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# =============================================================================
+# node — Node.js setup for Arch Linux 2026
+# =============================================================================
+set -e
+
+echo "Installing Node.js via nvm..."
+
+# Install nvm via AUR
+yay -S --needed --noconfirm nvm
+
+# Source nvm
+source /usr/share/nvm/init-nvm.sh
+
+# Install LTS Node
+nvm install --lts
+nvm use --lts
+nvm alias default lts/*
+
+# Global packages
+npm install -g pnpm typescript ts-node nodemon
+
+# Bun — fast JS runtime popular in 2026
+yay -S --needed --noconfirm bun-bin
+
+# Add nvm to shell config if not already there
+if ! grep -q "nvm" ~/.zshrc; then
+    echo 'source /usr/share/nvm/init-nvm.sh' >> ~/.zshrc
+fi
+
+echo "Node.js installed! Version: $(node --version)"

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# =============================================================================
+# tmux — Tmux setup for Arch Linux 2026
+# =============================================================================
+set -e
+
+echo "Installing tmux..."
+
+sudo pacman -S --needed --noconfirm tmux xclip
+
+# Install TPM (Tmux Plugin Manager)
+if [ ! -d ~/.tmux/plugins/tpm ]; then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+
+# Link config
+mkdir -p ~/.config/tmux
+ln -sf ~/.config/tmux/tmux.conf ~/.tmux.conf 2>/dev/null || true
+
+echo "Tmux installed! Version: $(tmux -V)"
+echo "Install plugins: prefix + I (inside tmux)"

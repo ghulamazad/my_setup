@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# =============================================================================
+# Telegram — Telegram for Arch Linux 2026
+# =============================================================================
+set -e
+
+echo "Installing telegram..."
+
+sudo pacman -S --needed --noconfirm telegram-desktop
+
+echo "Telegram installed!"

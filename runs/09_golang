@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# =============================================================================
+# golang — Go setup for Arch Linux 2026
+# =============================================================================
+set -e
+
+echo "Installing Go..."
+
+sudo pacman -S --needed --noconfirm go
+
+# Setup Go workspace
+mkdir -p ~/go/{bin,src,pkg}
+
+# Add Go paths to shell
+if ! grep -q "GOPATH" ~/.zshrc; then
+    cat >> ~/.zshrc << 'EOF'
+
+# Go
+export GOPATH="$HOME/go"
+export PATH="$PATH:$GOPATH/bin"
+EOF
+fi
+
+source ~/.zshrc 2>/dev/null || true
+
+echo "Go installed! Version: $(go version)"

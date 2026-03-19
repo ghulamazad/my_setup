@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# =============================================================================
+# ghostty — Ghostty terminal for Arch Linux 2026
+# =============================================================================
+set -e
+
+echo "Installing Ghostty..."
+
+# Ghostty via AUR (no need to build from source on Arch!)
+yay -S --needed --noconfirm ghostty
+
+echo "Ghostty installed!"
+echo "Config location: ~/.config/ghostty/config"

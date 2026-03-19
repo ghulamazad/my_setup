@@ -13,10 +13,8 @@ alias v="$VIM"
 ## All that sweet sweet fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export GOPATH=$HOME/.local/go
+
 export GIT_EDITOR=$VIM
-export N_PREFIX="$HOME/.local/n"
-export DEV_ENV_HOME="$HOME/Alien/dev"
 
 dev_env() {
 
@@ -45,19 +43,21 @@ addToPathFront() {
     fi
 }
 
-addToPathFront $HOME/.zig
-addToPathFront $HOME/.local/.npm-global/bin
+
 addToPathFront $HOME/.local/scripts
 addToPathFront $HOME/.local/bin
-addToPathFront $HOME/.local/npm/bin
-addToPathFront $HOME/.local/n/bin/
 
-addToPathFront $HOME/.local/go/bin
-addToPathFront /usr/local/go/bin
+# Go
+export GOPATH="$HOME/go"
+addToPath $GOPATH/bin
+
+# Rust
 addToPath $HOME/.cargo/bin
-addToPath $HOME/.local/Alien
-addToPath $HOME/.sst/bin
-addToPathFront $HOME/.local/zig true 
+
+# JAVA
+export JAVA_HOME="/usr/lib/jvm/java-21-openjdk"
+addToPath $JAVA_HOME/bin
 
 
-alias gt='NODE_OPTIONS="--no-deprecation" gt'
+# NVM - Node
+source /usr/share/nvm/init-nvm.sh

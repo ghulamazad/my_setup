@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+# =============================================================================
+# 01_libs — Core utilities for Arch Linux 2026
+# =============================================================================
+set -e
+
+echo "Installing core utilities..."
+
+sudo pacman -S --needed --noconfirm \
+    unzip \
+    zip \
+    p7zip \
+    ripgrep \
+    pavucontrol \
+    xclip \
+    xdotool \
+    jq \
+    python \
+    python-pip \
+    fzf \
+    btop \
+    curl \
+    wget \
+    vlc \
+    vlc-plugins-all \
+    make \
+    cmake \
+    ninja \
+    bluez \
+    bluez-utils \
+    blueman \
+    brightnessctl \
+    xdg-utils \
+    playerctl \
+    pipewire \
+    pipewire-pulse \
+    pipewire-alsa \
+    pipewire-jack \
+    wireplumber \
+    networkmanager \
+    network-manager-applet \
+    flameshot \
+    i3lock \
+    ffmpeg \
+    tmux \
+    openssh \
+    rsync \
+    tree \
+    fd \
+    bat \
+    eza \
+    duf \
+    tldr \
+    lm_sensors \
+    acpi \
+    xorg-xrandr \
+    xss-lock \
+    autorandr
+
+# Enable bluetooth
+sudo systemctl enable --now bluetooth
+# Tell blueman to use its own window instead of dunst
+gsettings set org.blueman.general notification-daemon false
+
+echo "Core utilities installed!"

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# =============================================================================
+# java — Java setup for Arch Linux 2026
+# Java 21 is the current LTS version
+# =============================================================================
+set -e
+
+echo "Installing Java 21 (LTS)..."
+
+sudo pacman -S --needed --noconfirm jdk21-openjdk
+
+# Set Java 21 as default
+sudo archlinux-java set java-21-openjdk
+
+# Add JAVA_HOME to shell
+if ! grep -q "JAVA_HOME" ~/.zshrc; then
+    cat >> ~/.zshrc << 'EOF'
+
+# Java
+export JAVA_HOME="/usr/lib/jvm/java-21-openjdk"
+export PATH="$PATH:$JAVA_HOME/bin"
+EOF
+fi
+
+echo "Java installed! Version: $(java --version | head -1)"

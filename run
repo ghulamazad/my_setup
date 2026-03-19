@@ -3,6 +3,9 @@ script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 if [ -z "$DEV_ENV" ]; then
     echo "env var DEV_ENV needs to be present"
+    echo "Usage: DEV_ENV=arch bash run.sh"
+    echo "       DEV_ENV=arch bash run.sh --dry"
+    echo "       DEV_ENV=arch bash run.sh docker"
     exit 1
 fi
 
@@ -31,7 +34,7 @@ log() {
 
 log "RUN: env: $DEV_ENV -- grep: $grep"
 
-runs_dir=$(find "$script_dir/runs" -mindepth 1 -maxdepth 1 -executable)
+runs_dir=$(find "$script_dir/runs" -mindepth 1 -maxdepth 1 | sort)
 
 for s in $runs_dir; do
     if basename "$s" | grep -vq "$grep"; then
@@ -41,6 +44,11 @@ for s in $runs_dir; do
 
     log "running script: $s"
     if [[ $dry_run == "0" ]]; then
-        bash -c "$s"  # Explicitly run in a new bash shell
+        # Check execute permission — add if missing
+        if [[ ! -x "$s" ]]; then
+            echo "Permission not set on $(basename $s) — adding execute permission..."
+            chmod +x "$s"
+        fi
+        bash -c "$s"
     fi
 done

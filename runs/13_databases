@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# =============================================================================
+# databases — PostgreSQL, Redis for Arch Linux 2026
+# =============================================================================
+set -e
+
+echo "Installing databases..."
+
+# PostgreSQL
+echo "Setting up PostgreSQL..."
+sudo pacman -S --needed --noconfirm postgresql
+sudo -u postgres initdb -D /var/lib/postgres/data 2>/dev/null || true
+sudo systemctl enable --now postgresql
+sudo -u postgres createuser --superuser "$USER" 2>/dev/null || true
+
+# Redis
+echo "Setting up Redis..."
+sudo pacman -S --needed --noconfirm redis
+sudo systemctl enable --now redis
+
+echo "Databases installed!"
+echo "  PostgreSQL: psql"
+echo "  Redis:      redis-cli"

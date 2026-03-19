@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# =============================================================================
+# vscode — VS Code setup for Arch Linux 2026
+# =============================================================================
+set -e
+
+echo "Installing VS Code..."
+
+yay -S --needed --noconfirm visual-studio-code-bin
+
+echo "VS Code installed!"
+echo "Launch: code"

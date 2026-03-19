@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# =============================================================================
+# battery — Battery optimization for Arch Linux 2026
+# =============================================================================
+set -e
+
+echo "Installing battery optimization..."
+
+sudo pacman -S --needed --noconfirm tlp tlp-rdw powertop
+
+# Remove power-profiles-daemon conflict before enabling TLP
+if systemctl is-active --quiet power-profiles-daemon; then
+    echo "Stopping power-profiles-daemon (conflicts with TLP)..."
+    sudo systemctl stop power-profiles-daemon
+    sudo systemctl disable power-profiles-daemon
+    sudo pacman -Rns --noconfirm power-profiles-daemon 2>/dev/null || true
+fi
+
+# Mask rfkill to avoid conflicts
+sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket
+
+# Enable TLP
+sudo systemctl enable --now tlp
+
+# Set battery charge limits (extends battery lifespan)
+# HP Victus specific — charges to 80% max
+sudo sed -i 's/^#START_CHARGE_THRESH_BAT0.*/START_CHARGE_THRESH_BAT0=75/' /etc/tlp.conf
+sudo sed -i 's/^#STOP_CHARGE_THRESH_BAT0.*/STOP_CHARGE_THRESH_BAT0=80/' /etc/tlp.conf
+
+# Apply new config
+sudo tlp start
+
+echo "Battery optimization installed!"
+echo "Check status: sudo tlp-stat -s"
+echo "Check battery: sudo tlp-stat -b"

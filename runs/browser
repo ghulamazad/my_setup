@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-sudo apt-get update -y
-
-# Google Chrome
-sudo apt-get install -y google-chrome-stable
-
-# Brave
-curl -fsS https://dl.brave.com/install.sh | sh

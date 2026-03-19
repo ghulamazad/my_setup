@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# =============================================================================
+# rust — Rust setup for Arch Linux 2026
+# =============================================================================
+set -e
+
+echo "Installing Rust..."
+
+sudo pacman -S --needed --noconfirm rustup
+rustup default stable
+rustup component add rustfmt clippy
+
+# Add cargo to shell
+if ! grep -q "cargo" ~/.zshrc; then
+    cat >> ~/.zshrc << 'EOF'
+
+# Rust
+export PATH="$PATH:$HOME/.cargo/bin"
+EOF
+fi
+
+echo "Rust installed! Version: $(rustc --version)"
