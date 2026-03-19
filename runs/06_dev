@@ -6,7 +6,7 @@ set -e
 
 echo "Installing developer tools..."
 
-sudo pacman -S --needed --noconfirm \
+sudo paru -S --needed --noconfirm \
     git \
     go \
     lua51 \

@@ -7,7 +7,7 @@ set -e
 
 echo "Installing Java 21 (LTS)..."
 
-sudo pacman -S --needed --noconfirm jdk21-openjdk
+sudo paru -S --needed --noconfirm jdk21-openjdk
 
 # Set Java 21 as default
 sudo archlinux-java set java-21-openjdk

@@ -6,7 +6,7 @@ set -e
 
 echo "Installing Docker..."
 
-sudo pacman -S --needed --noconfirm \
+sudo paru -S --needed --noconfirm \
     docker \
     docker-compose \
     docker-buildx
@@ -18,7 +18,7 @@ sudo systemctl enable --now docker
 sudo usermod -aG docker "$USER"
 
 # lazydocker — TUI for docker (useful for backend devs)
-yay -S --needed --noconfirm lazydocker-bin
+paru -S --needed --noconfirm lazydocker-bin
 
 echo "Docker installed!"
 echo "Log out and back in for docker group to take effect"

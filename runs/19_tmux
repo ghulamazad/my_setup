@@ -6,7 +6,7 @@ set -e
 
 echo "Installing tmux..."
 
-sudo pacman -S --needed --noconfirm tmux xclip
+sudo paru -S --needed --noconfirm tmux xclip
 
 # Install TPM (Tmux Plugin Manager)
 if [ ! -d ~/.tmux/plugins/tpm ]; then

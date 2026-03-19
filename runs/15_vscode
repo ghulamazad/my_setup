@@ -6,7 +6,7 @@ set -e
 
 echo "Installing VS Code..."
 
-yay -S --needed --noconfirm visual-studio-code-bin
+paru -S --needed --noconfirm visual-studio-code-bin
 
 echo "VS Code installed!"
 echo "Launch: code"

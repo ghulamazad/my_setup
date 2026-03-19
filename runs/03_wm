@@ -6,7 +6,7 @@ set -e
 
 echo "Installing window manager and tools..."
 
-sudo pacman -S --needed --noconfirm \
+sudo paru -S --needed --noconfirm \
     i3-wm \
     i3status \
     i3lock \
@@ -23,6 +23,6 @@ sudo pacman -S --needed --noconfirm \
     ttf-font-awesome
 
 # wlogout — for power menu (replaces custom scripts)
-yay -S --needed --noconfirm wlogout
+paru -S --needed --noconfirm wlogout
 
 echo "Window manager tools installed!"

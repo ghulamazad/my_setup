@@ -6,7 +6,7 @@ set -e
 
 echo "Installing Rust..."
 
-sudo pacman -S --needed --noconfirm rustup
+sudo paru -S --needed --noconfirm rustup
 rustup default stable
 rustup component add rustfmt clippy
 

@@ -7,7 +7,7 @@ set -e
 echo "Installing Node.js via nvm..."
 
 # Install nvm via AUR
-yay -S --needed --noconfirm nvm
+paru -S --needed --noconfirm nvm
 
 # Source nvm
 source /usr/share/nvm/init-nvm.sh
@@ -21,7 +21,7 @@ nvm alias default lts/*
 npm install -g pnpm typescript ts-node nodemon
 
 # Bun — fast JS runtime popular in 2026
-yay -S --needed --noconfirm bun-bin
+paru -S --needed --noconfirm bun-bin
 
 # Add nvm to shell config if not already there
 if ! grep -q "nvm" ~/.zshrc; then

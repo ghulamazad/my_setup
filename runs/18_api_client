@@ -7,7 +7,7 @@ set -e
 echo "Installing Bruno API client..."
 
 # Bruno — open source Postman alternative (2026 standard for backend devs)
-yay -S --needed --noconfirm bruno-bin
+paru -S --needed --noconfirm bruno-bin
 
 echo "Bruno installed!"
 echo "Launch: bruno"

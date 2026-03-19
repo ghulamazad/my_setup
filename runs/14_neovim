@@ -7,14 +7,14 @@ set -e
 echo "Installing Neovim..."
 
 # Neovim — latest version always in Arch repos
-sudo pacman -S --needed --noconfirm \
+sudo paru -S --needed --noconfirm \
     neovim \
     luarocks \
     tree-sitter \
     tree-sitter-cli
 
 # lazygit — used by many neovim plugins (LazyVim, etc.)
-sudo pacman -S --needed --noconfirm lazygit
+sudo paru -S --needed --noconfirm lazygit
 
 # Delve — Go debugger (same as before)
 go install github.com/go-delve/delve/cmd/dlv@latest

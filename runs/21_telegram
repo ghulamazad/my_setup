@@ -6,6 +6,6 @@ set -e
 
 echo "Installing telegram..."
 
-sudo pacman -S --needed --noconfirm telegram-desktop
+sudo paru -S --needed --noconfirm telegram-desktop
 
 echo "Telegram installed!"
