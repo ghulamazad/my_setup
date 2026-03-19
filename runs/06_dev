@@ -9,7 +9,7 @@ echo "Installing developer tools..."
 sudo pacman -S --needed --noconfirm \
     git \
     go \
-    lua \
+    lua51 \
     luarocks \
     base-devel \
     curl \

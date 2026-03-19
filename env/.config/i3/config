@@ -219,5 +219,3 @@ bindsym $mod+r mode "resize"
 
 # Bluetooth tray applet
 exec --no-startup-id blueman-applet
-
-exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=secrets
