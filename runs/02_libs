@@ -55,7 +55,8 @@ sudo pacman -S --needed --noconfirm \
     acpi \
     xorg-xrandr \
     xss-lock \
-    autorandr
+    autorandr \ 
+    mpv
 
 # Enable bluetooth
 sudo systemctl enable --now bluetooth
