@@ -39,8 +39,8 @@ font pango:"JetBrains Mono" 12
 
 # ── Window borders ───────────────────────────────────────────────────────────
 for_window [class="^.*"] border pixel 2
-gaps inner 6
-gaps outer 2
+gaps inner 0
+gaps outer 0
 
 # ── Window colors ────────────────────────────────────────────────────────────
 # class                 border    backgr.  text   indicator  child_border
@@ -219,3 +219,5 @@ bindsym $mod+r mode "resize"
 
 # Bluetooth tray applet
 exec --no-startup-id blueman-applet
+
+exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=secrets
