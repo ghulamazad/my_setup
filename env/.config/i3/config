@@ -207,6 +207,9 @@ bindsym $mod+Shift+m exec --no-startup-id ~/.local/scripts/monitor
 # Suspend
 bindsym $mod+Shift+period exec systemctl suspend
 
+# Shutdown
+bindsym $mod+Shift+Escape exec --no-startup-id systemctl poweroff
+
 # i3 control
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
