@@ -61,9 +61,13 @@ exec --no-startup-id nvidia-settings --assign CurrentMetaMode="nvidia-auto-selec
 # Compositor — glx backend for NVIDIA
 exec --no-startup-id picom --backend glx --vsync
 
-# Wallpaper — feh replaces nitrogen (more reliable on Arch)
+# Wallpaper — feh sets desktop background
 # exec_always --no-startup-id feh --bg-scale ~/Pictures/wallpapers/wallpaper.jpg
 exec_always --no-startup-id feh --bg-fill ~/Pictures/wallpapers/wallpaper.jpg
+
+# Lock screen wallpaper cache — update betterlockscreen whenever wallpaper changes
+# This must run at least once; re-run if you change wallpaper.
+exec_always --no-startup-id betterlockscreen -u ~/Pictures/wallpapers/wallpaper.jpg
 
 
 # Polybar
@@ -186,16 +190,11 @@ bindsym Print            exec --no-startup-id flameshot gui
 bindsym $mod+Print       exec --no-startup-id flameshot screen -c
 bindsym $mod+Shift+Print exec --no-startup-id flameshot full -c
 
-# Lock screen
-#bindsym $mod+Shift+x exec i3lock --show-failed-attempts -i ~/Pictures/wallpapers/lock_wallpaper.png
+# ── Lock screen — betterlockscreen (dimblur effect + wallpaper) ───────────────
+# Manual lock: Mod+Shift+x
+bindsym $mod+Shift+x exec --no-startup-id betterlockscreen -l dimblur
 
-# Screen locker on suspend
-#exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork --show-failed-attempts -i ~/Pictures/wallpapers/lock_wallpaper.png
-
-# Lock screen
-bindsym $mod+Shift+x exec betterlockscreen -l dimblur
-
-# Lock on suspend
+# Auto-lock on suspend/sleep via xss-lock
 exec --no-startup-id xss-lock -- betterlockscreen -l dimblur
 
 # Power menu — wlogout replaces custom power-menu script

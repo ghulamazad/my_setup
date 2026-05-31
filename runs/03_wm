@@ -10,6 +10,7 @@ sudo paru -S --needed --noconfirm \
     i3-wm \
     i3status \
     i3lock \
+    betterlockscreen \
     polybar \
     rofi \
     picom \
@@ -24,5 +25,8 @@ sudo paru -S --needed --noconfirm \
 
 # wlogout — for power menu (replaces custom scripts)
 paru -S --needed --noconfirm wlogout
+
+# Enable betterlockscreen systemd service (auto-lock on suspend)
+systemctl --user enable betterlockscreen@$USER
 
 echo "Window manager tools installed!"

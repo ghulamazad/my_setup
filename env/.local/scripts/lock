@@ -1,0 +1,5 @@
+#!/bin/bash
+# Lock screen — uses betterlockscreen (Catppuccin Mocha, dimblur effect)
+# Run `betterlockscreen -u ~/Pictures/wallpapers/wallpaper.jpg` once after
+# changing wallpaper to refresh the cached lock image.
+betterlockscreen -l dimblur
