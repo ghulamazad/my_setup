@@ -8,14 +8,14 @@ echo "Installing databases..."
 
 # PostgreSQL
 echo "Setting up PostgreSQL..."
-sudo paru -S --needed --noconfirm postgresql
+paru -S --needed --noconfirm postgresql
 sudo -u postgres initdb -D /var/lib/postgres/data 2>/dev/null || true
 sudo systemctl enable --now postgresql
 sudo -u postgres createuser --superuser "$USER" 2>/dev/null || true
 
 # Redis
 echo "Setting up Redis..."
-sudo paru -S --needed --noconfirm redis
+paru -S --needed --noconfirm redis
 sudo systemctl enable --now redis
 
 echo "Databases installed!"

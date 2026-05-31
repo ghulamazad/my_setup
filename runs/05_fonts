@@ -7,7 +7,7 @@ set -e
 
 echo "Installing fonts..."
 
-sudo paru -S --needed --noconfirm \
+paru -S --needed --noconfirm \
     ttf-jetbrains-mono \
     ttf-jetbrains-mono-nerd \
     ttf-meslo-nerd \

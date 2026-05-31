@@ -6,7 +6,7 @@ set -e
 
 echo "Installing window manager and tools..."
 
-sudo paru -S --needed --noconfirm \
+paru -S --needed --noconfirm \
     i3-wm \
     i3status \
     i3lock \
@@ -21,12 +21,7 @@ sudo paru -S --needed --noconfirm \
     lxappearance \
     arandr \
     papirus-icon-theme \
-    ttf-font-awesome
-
-# wlogout — for power menu (replaces custom scripts)
-paru -S --needed --noconfirm wlogout
-
-# Enable betterlockscreen systemd service (auto-lock on suspend)
-systemctl --user enable betterlockscreen@$USER
+    ttf-font-awesome \
+    wlogout
 
 echo "Window manager tools installed!"

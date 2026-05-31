@@ -6,7 +6,7 @@ set -e
 
 echo "Installing Docker..."
 
-sudo paru -S --needed --noconfirm \
+paru -S --needed --noconfirm \
     docker \
     docker-compose \
     docker-buildx

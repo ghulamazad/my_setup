@@ -10,14 +10,14 @@ echo "Installing NVIDIA driver..."
 # Enable multilib first
 if ! grep -q "^\[multilib\]" /etc/pacman.conf; then
     sudo sed -i '/^#\[multilib\]/,/^#Include = \/etc\/pacman.d\/mirrorlist/ s/^#//' /etc/pacman.conf
-    sudo paru -Syy
+    paru -Syy
 fi
 
 # Kernel headers — required before NVIDIA
-sudo paru -S --needed --noconfirm linux-headers
+paru -S --needed --noconfirm linux-headers
 
 # nvidia-open — correct driver for RTX 4060 (Ada Lovelace) in 2026
-sudo paru -S --needed --noconfirm \
+paru -S --needed --noconfirm \
     nvidia-open \
     nvidia-utils \
     nvidia-settings \

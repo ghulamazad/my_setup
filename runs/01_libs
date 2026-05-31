@@ -13,7 +13,7 @@ popd
 
 echo "Installing core utilities..."
 
-sudo paru -S --needed --noconfirm \
+paru -S --needed --noconfirm \
     unzip \
     zip \
     ripgrep \

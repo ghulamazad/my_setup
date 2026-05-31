@@ -6,7 +6,7 @@ set -e
 
 echo "Installing Go..."
 
-sudo paru -S --needed --noconfirm go
+paru -S --needed --noconfirm go
 
 # Setup Go workspace
 mkdir -p ~/go/{bin,src,pkg}

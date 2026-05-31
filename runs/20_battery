@@ -6,14 +6,14 @@ set -e
 
 echo "Installing battery optimization..."
 
-sudo paru -S --needed --noconfirm tlp tlp-rdw powertop
+paru -S --needed --noconfirm tlp tlp-rdw powertop
 
 # Remove power-profiles-daemon conflict before enabling TLP
 if systemctl is-active --quiet power-profiles-daemon; then
     echo "Stopping power-profiles-daemon (conflicts with TLP)..."
     sudo systemctl stop power-profiles-daemon
     sudo systemctl disable power-profiles-daemon
-    sudo paru -Rns --noconfirm power-profiles-daemon 2>/dev/null || true
+    paru -Rns --noconfirm power-profiles-daemon 2>/dev/null || true
 fi
 
 # Mask rfkill to avoid conflicts
