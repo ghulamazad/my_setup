@@ -1,0 +1,34 @@
+#!/bin/bash
+# =============================================================================
+# battery-warn — Low battery notification
+# Called by systemd user timer every 3 minutes.
+# Reads directly from /sys (no acpi/upower overhead).
+# =============================================================================
+
+BAT="/sys/class/power_supply/BAT0"
+WARN_LEVEL=12
+CRITICAL_LEVEL=5
+
+# Read battery level and status directly from kernel — zero overhead
+CAPACITY=$(cat "$BAT/capacity" 2>/dev/null) || exit 0
+STATUS=$(cat "$BAT/status" 2>/dev/null)      # "Charging" | "Discharging" | "Full"
+
+# Only warn when actually discharging
+[ "$STATUS" != "Discharging" ] && exit 0
+
+if [ "$CAPACITY" -le "$CRITICAL_LEVEL" ]; then
+    notify-send \
+        --urgency=critical \
+        --expire-time=0 \
+        --icon=battery-caution \
+        "⚠ Battery Critical: ${CAPACITY}%" \
+        "Plug in NOW — system will suspend soon!"
+
+elif [ "$CAPACITY" -le "$WARN_LEVEL" ]; then
+    notify-send \
+        --urgency=normal \
+        --expire-time=8000 \
+        --icon=battery-low \
+        "🔋 Battery Low: ${CAPACITY}%" \
+        "Please plug in your charger."
+fi

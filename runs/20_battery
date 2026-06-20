@@ -33,3 +33,11 @@ sudo tlp start
 echo "Battery optimization installed!"
 echo "Check status: sudo tlp-stat -s"
 echo "Check battery: sudo tlp-stat -b"
+
+# Battery low warning — systemd user timer (runs every 3 min, zero overhead)
+echo "Setting up battery-warn timer..."
+chmod +x "$HOME/.local/scripts/battery-warn"
+systemctl --user daemon-reload
+systemctl --user enable --now battery-warn.timer
+echo "Battery warn timer enabled — check: systemctl --user status battery-warn.timer"
+

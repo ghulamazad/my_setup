@@ -1,0 +1,6 @@
+[Unit]
+Description=Battery low warning notification
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/scripts/battery-warn
