@@ -1,15 +1,38 @@
 #!/bin/bash
+# =============================================================================
+# monitor — Auto-configure displays based on connected outputs
+# Outputs on this machine:
+#   eDP-1     = laptop screen (primary, 1920x1080 @ 144Hz)
+#   DP-1      = external monitor via DisplayPort
+#   HDMI-1-0  = HDMI port (currently unused/disconnected)
+# =============================================================================
 
-# Check if HDMI-1 is connected
-HDMI_STATUS=$(xrandr --verbose | grep "HDMI-1" | grep "connected")
+LAPTOP="eDP-1"
+DP="DP-1"
+HDMI="HDMI-1-0"
 
-# If HDMI-1 is connected
-if [ -n "$HDMI_STATUS" ]; then
-    # Configure HDMI-1 to the left of eDP-1
-    xrandr --output HDMI-1-0 --auto --left-of eDP-1 # --dpi 140
+is_connected() {
+    xrandr | grep -E "^$1 connected" &>/dev/null
+}
+
+if is_connected "$DP"; then
+    echo "[monitor] DP-1 connected — extending left of laptop"
+    xrandr \
+        --output "$DP"    --auto --left-of "$LAPTOP" --primary \
+        --output "$LAPTOP" --auto \
+        --output "$HDMI"  --off
+
+elif is_connected "$HDMI"; then
+    echo "[monitor] HDMI-1-0 connected — extending left of laptop"
+    xrandr \
+        --output "$HDMI"  --auto --left-of "$LAPTOP" --primary \
+        --output "$LAPTOP" --auto \
+        --output "$DP"    --off
+
 else
-    # If HDMI-1 is not connected, disable it
-    xrandr --output HDMI-1-0 --off
-    # You can add other configurations here if needed, like centering eDP-1 or whatever you'd like.
+    echo "[monitor] No external display — laptop only"
+    xrandr \
+        --output "$LAPTOP" --auto --primary \
+        --output "$DP"    --off \
+        --output "$HDMI"  --off
 fi
-

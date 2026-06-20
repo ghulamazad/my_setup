@@ -78,8 +78,7 @@ exec --no-startup-id nm-applet
 
 
 
-# Auto monitor setup
-exec --no-startup-id xrandr --output HDMI-1-1 --auto --left-of eDP-1
+# Auto monitor setup — delegate to monitor script
 exec --no-startup-id ~/.local/scripts/monitor
 
 # PipeWire audio (ensure running)
@@ -165,9 +164,9 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 # App workspace assignments
 assign [class="Slack"] $ws4
 
-# Workspace monitor output
-workspace 1 output HDMI-1-1
-workspace 2 output HDMI-1-1
+# Workspace monitor output (DP-1 = external, eDP-1 = laptop)
+workspace 1 output DP-1 eDP-1
+workspace 2 output DP-1 eDP-1
 
 # ── System Keys ───────────────────────────────────────────────────────────────
 # Volume — pamixer replaces pactl (PipeWire native, simpler)
@@ -200,8 +199,17 @@ exec --no-startup-id xss-lock -- betterlockscreen -l dimblur
 # Power menu — wlogout replaces custom power-menu script
 bindsym $mod+Shift+e exec --no-startup-id wlogout
 
-# Monitor management
+# Monitor management — auto-detect
 bindsym $mod+Shift+m exec --no-startup-id ~/.local/scripts/monitor
+
+# Display mode picker — like Windows Win+P
+# Mod+p        → rofi menu (Extend / Mirror / Laptop / External)
+# Mod+p+1..4   → direct modes (no menu)
+bindsym $mod+p       exec --no-startup-id ~/.local/scripts/display
+bindsym $mod+F1      exec --no-startup-id ~/.local/scripts/display laptop
+bindsym $mod+F2      exec --no-startup-id ~/.local/scripts/display extend
+bindsym $mod+F3      exec --no-startup-id ~/.local/scripts/display mirror
+bindsym $mod+F4      exec --no-startup-id ~/.local/scripts/display external
 
 # Suspend
 bindsym $mod+Shift+period exec systemctl suspend

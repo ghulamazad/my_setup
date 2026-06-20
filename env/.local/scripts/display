@@ -1,0 +1,120 @@
+#!/bin/bash
+# =============================================================================
+# display — Windows-style display mode picker via rofi
+# Modes: Extend | Mirror | Laptop Only | External Only
+# Usage: display           → shows rofi menu
+#        display extend    → apply directly (no menu)
+#        display mirror    → apply directly
+#        display laptop    → apply directly
+#        display external  → apply directly
+# =============================================================================
+
+LAPTOP="eDP-1"
+DP="DP-1"
+HDMI="HDMI-1-0"
+
+# ── Detect active external output ────────────────────────────────────────────
+get_external() {
+    if xrandr | grep -E "^$DP connected" &>/dev/null; then
+        echo "$DP"
+    elif xrandr | grep -E "^$HDMI connected" &>/dev/null; then
+        echo "$HDMI"
+    else
+        echo ""
+    fi
+}
+
+EXTERNAL=$(get_external)
+
+# ── Apply mode ────────────────────────────────────────────────────────────────
+apply_mode() {
+    local mode="$1"
+
+    case "$mode" in
+
+        extend)
+            if [ -z "$EXTERNAL" ]; then
+                notify-send "Display" "No external monitor connected" -i display -t 3000
+                exit 1
+            fi
+            xrandr \
+                --output "$EXTERNAL" --auto --left-of "$LAPTOP" --primary \
+                --output "$LAPTOP"   --auto
+            notify-send "Display" "⬅ Extended — external left of laptop" -i display -t 2000
+            ;;
+
+        mirror)
+            if [ -z "$EXTERNAL" ]; then
+                notify-send "Display" "No external monitor connected" -i display -t 3000
+                exit 1
+            fi
+            # Mirror at 1920x1080 (supported by both screens)
+            xrandr \
+                --output "$LAPTOP"   --mode 1920x1080 --primary \
+                --output "$EXTERNAL" --mode 1920x1080 --same-as "$LAPTOP"
+            notify-send "Display" "🔁 Mirror — both screens showing the same" -i display -t 2000
+            ;;
+
+        laptop)
+            xrandr \
+                --output "$LAPTOP"   --auto --primary \
+                --output "$DP"       --off \
+                --output "$HDMI"     --off
+            notify-send "Display" "💻 Laptop only" -i display -t 2000
+            ;;
+
+        external)
+            if [ -z "$EXTERNAL" ]; then
+                notify-send "Display" "No external monitor connected" -i display -t 3000
+                exit 1
+            fi
+            xrandr \
+                --output "$EXTERNAL" --auto --primary \
+                --output "$LAPTOP"   --off
+            notify-send "Display" "🖥 External only" -i display -t 2000
+            ;;
+
+        *)
+            notify-send "Display" "Unknown mode: $mode" -t 2000
+            exit 1
+            ;;
+    esac
+
+    # Restart polybar to fit new layout
+    sleep 0.5
+    "$HOME/.config/polybar/launch.sh" &>/dev/null &
+}
+
+# ── Rofi menu ─────────────────────────────────────────────────────────────────
+show_menu() {
+    # Grey out options that need an external monitor
+    if [ -n "$EXTERNAL" ]; then
+        EXT_LABEL="($EXTERNAL connected)"
+        OPTIONS="⬅  Extend — external left\n🔁  Mirror — duplicate screen\n💻  Laptop only\n🖥  External only"
+    else
+        EXT_LABEL="(no external connected)"
+        OPTIONS="💻  Laptop only\n⬅  Extend — external left [unavailable]\n🔁  Mirror — duplicate screen [unavailable]\n🖥  External only [unavailable]"
+    fi
+
+    CHOICE=$(printf "$OPTIONS" | rofi \
+        -dmenu \
+        -i \
+        -p "Display $EXT_LABEL" \
+        -theme-str 'window {width: 480px;} listview {lines: 4;}' \
+        -no-custom)
+
+    case "$CHOICE" in
+        "⬅  Extend"*)   apply_mode extend   ;;
+        "🔁  Mirror"*)   apply_mode mirror   ;;
+        "💻  Laptop"*)   apply_mode laptop   ;;
+        "🖥  External"*) apply_mode external ;;
+        *) exit 0 ;;
+    esac
+}
+
+# ── Entry point ───────────────────────────────────────────────────────────────
+if [ -n "$1" ]; then
+    apply_mode "$1"
+else
+    show_menu
+fi
