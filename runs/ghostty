@@ -1,30 +1,26 @@
 #!/usr/bin/env bash
-# This script installs Ghostty, a terminal emulator, on an Ubuntu 24.04 system.
 
-# Update package index
-sudo apt-get update
+# Versions
+ZIG_VERSION="0.15.2"
 
-# Install prerequisites
-sudo apt install -y libgtk-4-dev libadwaita-1-dev git blueprint-compiler gettext libxml2-utils build-essential
-
+# Derived variables
+ZIG_ARCHIVE="zig-x86_64-linux-${ZIG_VERSION}"
+ZIG_URL="https://ziglang.org/download/${ZIG_VERSION}/${ZIG_ARCHIVE}.tar.xz"
+ZIG_INSTALL_DIR="$HOME/.local/zig"
 
 # Download and extract Zig
-wget https://ziglang.org/download/0.14.0/zig-linux-x86_64-0.14.0.tar.xz -O /tmp/zig.tar.xz
-tar -xvf /tmp/zig.tar.xz -C $HOME/.local
+wget "$ZIG_URL" -O /tmp/zig.tar.xz
+mkdir -p "$HOME/.local"
+tar -xf /tmp/zig.tar.xz -C "$HOME/.local"
+
+# Replace old installation
+rm -rf "$ZIG_INSTALL_DIR"
+mv "$HOME/.local/$ZIG_ARCHIVE" "$ZIG_INSTALL_DIR"
 
 # Add Zig to PATH for this session
-export PATH="$HOME/.local/zig-linux-x86_64-0.14.0:$PATH"
+export PATH="$ZIG_INSTALL_DIR:$PATH"
 
-# Add Zig to PATH permanently (if not already in ~/.bashrc)
-if ! grep -q 'export PATH=$PATH:$HOME/.local/zig-linux-x86_64-0.14.0' ~/.bashrc; then
-    echo 'export PATH=$PATH:$HOME/.local/zig-linux-x86_64-0.14.0' >> ~/.bashrc
+# Add Zig to PATH permanently (if not already present)
+if ! grep -q '\$HOME/.local/zig' ~/.zshrc; then
+    echo 'export PATH=$PATH:$HOME/.local/zig' >> ~/.zshrc
 fi
-
-# Clone Ghostty repository
-git clone git@github.com:ghostty-org/ghostty.git $HOME/Alien/ghostty
-
-# Build and install Ghostty
-(
-    cd $HOME/Alien/ghostty
-    zig build -p $HOME/.local -Doptimize=ReleaseFast
-)
