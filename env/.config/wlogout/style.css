@@ -1,46 +1,45 @@
-/* ----------- 💫 https://github.com/JaKooLit 💫 -------- */
-/* wallust-wlogout */
+/* =============================================================================
+ * wlogout Style — Tokyo Night
+ * ============================================================================= */
 
 window {
     font-size: 24pt;
-    color: #cdd6f4; /* text */
-    background-color: rgba(30, 30, 46, 0.8);
+    color: #c0caf5;
+    background-color: rgba(22, 22, 30, 0.90);
 }
 
 button {
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 20%;
-    background-color: rgba(200, 220, 255, 0);
+    background-size: 24%;
+    background-color: rgba(36, 40, 59, 0.40);
     animation: gradient_f 10s ease-in infinite;
     transition: all 0.3s cubic-bezier(.55, 0.0, .28, 1.682), box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
     border-radius: 80px;
-	border:0px;
-	outline-style: none;
+    border: 1px solid rgba(41, 46, 66, 0.6);
+    outline-style: none;
+    margin: 12px;
 }
 
 button:focus {
-    background-size: 50%;
-	border: 0px;
-	outline-style: none;
-
+    background-size: 45%;
+    border: 1px solid #7aa2f7;
+    outline-style: none;
 }
 
 button:hover {
-    background-color: transparent; 
-    color: #89b4fa;
-    background-size: 50%;
-    margin: 30px;
+    background-color: rgba(122, 162, 247, 0.15);
+    color: #7dcfff;
+    background-size: 45%;
+    margin: 20px;
     border-radius: 80px;
+    border: 1px solid #7dcfff;
     outline-style: none;
-	
 }
 
-/* Adjust the size of the icon or content inside the button */
 button span {
-    font-size: 1.2em; /* Increase the font size */
+    font-size: 1.2em;
 }
-
 
 #lock {
     background-image: image(url("./icons/lock.png"));

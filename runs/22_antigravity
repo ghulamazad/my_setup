@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+INSTALL_DIR="/opt/antigravity-ide"
+
+# If the script is run via sudo, create the desktop file for the original
+# invoking user (stored in $SUDO_USER). Otherwise use the current $HOME.
+if [ -n "${SUDO_USER-}" ]; then
+    TARGET_HOME=$(getent passwd "$SUDO_USER" | cut -d: -f6)
+    # fallback if getent fails
+    if [ -z "$TARGET_HOME" ]; then
+        TARGET_HOME="/home/$SUDO_USER"
+    fi
+else
+    TARGET_HOME="$HOME"
+fi
+
+DESKTOP_FILE="${TARGET_HOME}/.local/share/applications/antigravity-ide.desktop"
+
+DOWNLOAD_URL="https://edgedl.me.gvt1.com/edgedl/release2/j0qc3/antigravity/stable/2.5.5-4923483625488384/linux-x64/Antigravity%20IDE.tar.gz"
+
+TMP_DIR=$(mktemp -d)
+ARCHIVE="$TMP_DIR/antigravity-ide.tar.gz"
+
+cleanup() {
+    rm -rf "$TMP_DIR"
+}
+trap cleanup EXIT
+
+echo "Installing required packages..."
+sudo dnf install -y curl tar desktop-file-utils
+
+echo "Downloading Antigravity IDE..."
+curl -L "$DOWNLOAD_URL" -o "$ARCHIVE"
+
+echo "Extracting archive..."
+tar -xzf "$ARCHIVE" -C "$TMP_DIR"
+
+EXTRACTED_DIR=$(tar -tf "$ARCHIVE" | head -n1 | cut -d/ -f1)
+
+echo "Installing to $INSTALL_DIR..."
+sudo rm -rf "$INSTALL_DIR"
+sudo mv "$TMP_DIR/$EXTRACTED_DIR" "$INSTALL_DIR"
+
+mkdir -p "${TARGET_HOME}/.local/share/applications"
+
+cat > "$DESKTOP_FILE" <<EOF
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Antigravity IDE
+Comment=Google Antigravity IDE
+Exec=$INSTALL_DIR/antigravity-ide
+Icon=$INSTALL_DIR/icon.png
+Terminal=false
+Categories=Development;IDE;
+StartupNotify=true
+EOF
+
+chmod +x "$DESKTOP_FILE"
+
+# If run with sudo, make sure the desktop file is owned by the original user
+if [ -n "${SUDO_USER-}" ]; then
+    sudo chown "$SUDO_USER:$SUDO_USER" "$DESKTOP_FILE" || true
+fi
+
+update-desktop-database "${TARGET_HOME}/.local/share/applications" >/dev/null 2>&1 || true
+
+echo
+echo "Installation complete!"
+echo
+echo "Launch Antigravity IDE from your Applications menu."
+echo "Or run:"
+echo "  $INSTALL_DIR/antigravity-ide"

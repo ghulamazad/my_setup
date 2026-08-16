@@ -1,63 +1,81 @@
-export XDG_CONFIG_HOME=$HOME/.config
-VIM="nvim"
+# =============================================================================
+# Zsh Profile & Environment
+# =============================================================================
+export XDG_CONFIG_HOME="$HOME/.config"
+export EDITOR="nvim"
+export VISUAL="nvim"
+export GIT_EDITOR="nvim"
 
-alias vim="$VIM"
-alias v="$VIM"
+# ── Aliases ───────────────────────────────────────────────────────────────────
+alias vim="nvim"
+alias v="nvim"
 
-# Alien=$XDG_CONFIG_HOME/Alien
-# DEV_ENV=$HOME/dev
-# for i in `find -L $Alien`; do
-#     source $i
-# done
+# Safety
+alias cp="cp -i"
+alias mv="mv -i"
+alias rm="rm -I"
 
-## All that sweet sweet fzf
+# Git shortcuts
+alias gs="git status -sb"
+alias ga="git add"
+alias gc="git commit"
+alias gp="git push"
+alias gpl="git pull"
+alias gd="git diff"
+alias gl="git log --oneline --graph --decorate"
+
+# Config shortcuts
+alias config-i3="$EDITOR ~/.config/i3/config"
+alias config-nvim="$EDITOR ~/.config/nvim"
+alias config-polybar="$EDITOR ~/.config/polybar"
+alias config-zsh="$EDITOR ~/.zshrc"
+
+# ── FZF Tokyo Night Theme ────────────────────────────────────────────────────
+export FZF_DEFAULT_OPTS=" \
+  --color=bg+:#24283b,bg:#1a1b26,spinner:#7dcfff,hl:#bb9af7 \
+  --color=fg:#c0caf5,header:#7aa2f7,info:#e0af68,pointer:#7dcfff \
+  --color=marker:#9ece6a,fg+:#c0caf5,prompt:#7dcfff,hl+:#bb9af7"
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-
-export GIT_EDITOR=$VIM
-
-dev_env() {
-
-}
-
+# ── Keybindings ───────────────────────────────────────────────────────────────
 bindkey -s ^f "tmux-sessionizer\n"
 
+# ── Helper Functions ──────────────────────────────────────────────────────────
 catr() {
-    tail -n "+$1" $3 | head -n "$(($2 - $1 + 1))"
+    tail -n "+$1" "$3" | head -n "$(($2 - $1 + 1))"
 }
 
 cat1Line() {
-    cat $1 | tr -d "\n"
+    cat "$1" | tr -d "\n"
 }
-
 
 addToPath() {
     if [[ "$PATH" != *"$1"* ]]; then
-        export PATH=$PATH:$1
+        export PATH="$PATH:$1"
     fi
 }
 
 addToPathFront() {
-    if [[ ! -z "$2" ]] || [[ "$PATH" != *"$1"* ]]; then
-        export PATH=$1:$PATH
+    if [[ -n "$2" ]] || [[ "$PATH" != *"$1"* ]]; then
+        export PATH="$1:$PATH"
     fi
 }
 
-
-addToPathFront $HOME/.local/scripts
-addToPathFront $HOME/.local/bin
+# ── PATH Configuration ───────────────────────────────────────────────────────
+addToPathFront "$HOME/.local/scripts"
+addToPathFront "$HOME/.local/bin"
 
 # Go
 export GOPATH="$HOME/go"
-addToPath $GOPATH/bin
+addToPath "$GOPATH/bin"
 
 # Rust
-addToPath $HOME/.cargo/bin
+addToPath "$HOME/.cargo/bin"
 
-# JAVA
+# Java
 export JAVA_HOME="/usr/lib/jvm/java-21-openjdk"
-addToPath $JAVA_HOME/bin
+addToPath "$JAVA_HOME/bin"
 
-
-# NVM - Node
-source /usr/share/nvm/init-nvm.sh
+# Starship Prompt
+eval "$(starship init zsh)"

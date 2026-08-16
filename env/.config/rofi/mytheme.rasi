@@ -1,57 +1,89 @@
+/* =============================================================================
+ * Rofi Theme — Tokyo Night
+ * ============================================================================= */
+
 * {
-    bg: #11121D;
-    bg-alt:#444b6a;
-    fg:#FFFFFF;
-    fg-alt:#787c99;
+    bg: #1a1b26;
+    bg-alt: #24283b;
+    fg: #c0caf5;
+    fg-alt: #565f89;
+    accent: #7dcfff;
+    accent-blue: #7aa2f7;
+    selection-bg: #292e42;
+    border-col: #292e42;
 
-    background-color: @bg;
+    background-color: transparent;
 
-    border:0;
-    margin:0;
-    padding:0;
-    spacing:0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    spacing: 0;
 }
 
 window {
-    width:45%;
+    width: 45%;
+    border: 1px;
+    border-color: @border-col;
+    border-radius: 8px;
+    background-color: @bg;
 }
 
 element {
-    padding: 12;
+    padding: 10px 12px;
+    background-color: transparent;
     text-color: @fg-alt;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 element selected {
-    text-color: @fg;
+    background-color: @selection-bg;
+    text-color: @accent;
+}
+
+element selected element-icon {
+    background-color: transparent;
+}
+
+element selected element-text {
+    background-color: transparent;
+    text-color: @accent;
 }
 
 element-text {
-    background-color: inherit;
-    text-color:inherit;
+    background-color: transparent;
+    text-color: inherit;
     vertical-align: 0.5;
+    cursor: inherit;
 }
 
 element-icon {
-    size:30;
+    background-color: transparent;
+    text-color: inherit;
+    size: 28px;
+    padding: 0 10px 0 0;
+    cursor: inherit;
 }
 
-entry{
+entry {
     background-color: @bg-alt;
-    padding: 12;
+    padding: 12px;
     text-color: @fg;
 }
 
 inputbar {
     children: [prompt, entry];
+    background-color: transparent;
 }
 
 listview {
-    background-color: @bg;
+    background-color: transparent;
     columns: 1;
     lines: 8;
+    padding: 6px 0 0 0;
 }
 
-mainbox{
+mainbox {
     background-color: @bg;
     children: [inputbar, listview];
 }
@@ -59,6 +91,6 @@ mainbox{
 prompt {
     background-color: @bg-alt;
     enabled: true;
-    padding: 12 0 0 12;
-    text-color: @fg;
+    padding: 12px 0 0 12px;
+    text-color: @accent-blue;
 }

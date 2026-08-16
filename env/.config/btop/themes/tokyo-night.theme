@@ -1,0 +1,56 @@
+# Tokyo Night theme for btop
+# Main background and foreground
+theme[main_bg]="#1a1b26"
+theme[main_fg]="#c0caf5"
+theme[title]="#c0caf5"
+theme[hi_fg]="#7aa2f7"
+theme[selected_bg]="#292e42"
+theme[selected_fg]="#7dcfff"
+theme[inactive_fg]="#565f89"
+theme[graph_text]="#a9b1d6"
+theme[meter_bg]="#24283b"
+theme[proc_misc]="#bb9af7"
+
+# Box borders
+theme[cpu_box]="#7aa2f7"
+theme[mem_box]="#7dcfff"
+theme[net_box]="#bb9af7"
+theme[proc_box]="#9ece6a"
+theme[div_line]="#292e42"
+
+# Temperature graph
+theme[temp_start]="#9ece6a"
+theme[temp_mid]="#e0af68"
+theme[temp_end]="#f7768e"
+
+# CPU graph
+theme[cpu_start]="#7dcfff"
+theme[cpu_mid]="#7aa2f7"
+theme[cpu_end]="#bb9af7"
+
+# Mem / Free / Cached graphs
+theme[free_start]="#73daca"
+theme[free_mid]="#9ece6a"
+theme[free_end]="#9ece6a"
+theme[cached_start]="#7aa2f7"
+theme[cached_mid]="#bb9af7"
+theme[cached_end]="#bb9af7"
+theme[available_start]="#a9b1d6"
+theme[available_mid]="#c0caf5"
+theme[available_end]="#c0caf5"
+theme[used_start]="#ff9e64"
+theme[used_mid]="#e0af68"
+theme[used_end]="#f7768e"
+
+# Network graph
+theme[download_start]="#7aa2f7"
+theme[download_mid]="#7dcfff"
+theme[download_end]="#b4f9f8"
+theme[upload_start]="#bb9af7"
+theme[upload_mid]="#7aa2f7"
+theme[upload_end]="#7dcfff"
+
+# Process graph
+theme[process_start]="#7aa2f7"
+theme[process_mid]="#7dcfff"
+theme[process_end]="#9ece6a"

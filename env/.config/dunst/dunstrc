@@ -1,10 +1,14 @@
+# =============================================================================
+# Dunst Notification Daemon — Tokyo Night
+# =============================================================================
+
 [global]
     monitor = 0
     follow = none
-    width = 300
+    width = 320
     height = 300
     origin = top-right
-    offset = 10x50
+    offset = 12x56
     scale = 0
     notification_limit = 20
     progress_bar = true
@@ -17,15 +21,15 @@
     indicate_hidden = yes
     transparency = 0
     separator_height = 2
-    padding = 10
-    horizontal_padding = 10
+    padding = 12
+    horizontal_padding = 12
     text_icon_padding = 0
     frame_width = 2
-    frame_color = "#89b4fa"
-    gap_size = 4
+    frame_color = "#7aa2f7"
+    gap_size = 6
     separator_color = frame
     sort = yes
-    font = JetBrains Mono 10
+    font = JetBrains Mono 11
     line_height = 0
     markup = full
     format = "<b>%s</b>\n%b"
@@ -38,19 +42,17 @@
     hide_duplicate_count = false
     show_indicators = yes
 
-    # Icons — Arch icon paths (updated from Ubuntu paths)
+    # Icons
     enable_recursive_icon_lookup = true
     icon_theme = "Papirus-Dark, Adwaita"
     icon_position = left
     min_icon_size = 32
     max_icon_size = 128
-    # Arch icon paths (replaces Ubuntu /usr/share/icons/gnome paths)
     icon_path = /usr/share/icons/Papirus-Dark/16x16/status/:/usr/share/icons/Papirus-Dark/16x16/devices/:/usr/share/icons/hicolor/16x16/apps/
 
     sticky_history = yes
     history_length = 20
 
-    # dmenu path on Arch
     dmenu = /usr/bin/rofi -dmenu -p dunst:
     browser = /usr/bin/xdg-open
     always_run_script = true
@@ -68,19 +70,19 @@
     per_monitor_dpi = false
 
 [urgency_low]
-    background = "#1e1e2e"
-    foreground = "#a6adc8"
-    frame_color = "#313244"
+    background = "#1a1b26"
+    foreground = "#565f89"
+    frame_color = "#292e42"
     timeout = 5
 
 [urgency_normal]
-    background = "#1e1e2e"
-    foreground = "#cdd6f4"
-    frame_color = "#89b4fa"
+    background = "#1a1b26"
+    foreground = "#c0caf5"
+    frame_color = "#7aa2f7"
     timeout = 10
 
 [urgency_critical]
-    background = "#1e1e2e"
-    foreground = "#f38ba8"
-    frame_color = "#f38ba8"
+    background = "#1a1b26"
+    foreground = "#f7768e"
+    frame_color = "#f7768e"
     timeout = 0

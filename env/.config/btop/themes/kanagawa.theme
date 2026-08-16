@@ -1,0 +1,56 @@
+# Kanagawa Wave theme for btop
+# Main background and foreground
+theme[main_bg]="#1F1F28"
+theme[main_fg]="#DCD7BA"
+theme[title]="#DCD7BA"
+theme[hi_fg]="#7E9CD8"
+theme[selected_bg]="#2A2A37"
+theme[selected_fg]="#7E9CD8"
+theme[inactive_fg]="#727169"
+theme[graph_text]="#C8C093"
+theme[meter_bg]="#2A2A37"
+theme[proc_misc]="#E46876"
+
+# Box borders
+theme[cpu_box]="#7E9CD8"
+theme[mem_box]="#98BB6C"
+theme[net_box]="#957FB8"
+theme[proc_box]="#DCAA66"
+theme[div_line]="#363646"
+
+# Temperature graph
+theme[temp_start]="#98BB6C"
+theme[temp_mid]="#DCAA66"
+theme[temp_end]="#E82424"
+
+# CPU graph
+theme[cpu_start]="#7E9CD8"
+theme[cpu_mid]="#7AA89F"
+theme[cpu_end]="#98BB6C"
+
+# Mem / Free / Cached graphs
+theme[free_start]="#7AA89F"
+theme[free_mid]="#98BB6C"
+theme[free_end]="#98BB6C"
+theme[cached_start]="#938AA9"
+theme[cached_mid]="#957FB8"
+theme[cached_end]="#957FB8"
+theme[available_start]="#C8C093"
+theme[available_mid]="#DCD7BA"
+theme[available_end]="#DCD7BA"
+theme[used_start]="#FFA066"
+theme[used_mid]="#E46876"
+theme[used_end]="#E82424"
+
+# Network graph
+theme[download_start]="#7E9CD8"
+theme[download_mid]="#6585E6"
+theme[download_end]="#957FB8"
+theme[upload_start]="#7E9CD8"
+theme[upload_mid]="#6585E6"
+theme[upload_end]="#957FB8"
+
+# Process graph
+theme[process_start]="#7E9CD8"
+theme[process_mid]="#7AA89F"
+theme[process_end]="#98BB6C"

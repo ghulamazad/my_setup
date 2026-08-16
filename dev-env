@@ -28,25 +28,25 @@ log "env: $DEV_ENV"
 
 update_files() {
     log "copying over files from: $1"
-    pushd $1 &> /dev/null
+    pushd "$1" &> /dev/null || return
     (
-        configs=`find . -mindepth 1 -maxdepth 1 -type d`
+        configs=$(find . -mindepth 1 -maxdepth 1)
         for c in $configs; do
-            directory=${2%/}/${c#./}
-            log "    removing: rm -rf $directory"
+            target="${2%/}/${c#./}"
+            log "    removing: rm -rf $target"
 
             if [[ $dry_run == "0" ]]; then
-                rm -rf $directory
+                rm -rf "$target"
             fi
 
-            log "    copying env: cp $c $2"
+            log "    copying env: cp -r $c to $2"
             if [[ $dry_run == "0" ]]; then
-                cp -r ./$c $2
+                cp -r "./$c" "$2"
             fi
         done
 
     )
-    popd &> /dev/null
+    popd &> /dev/null || return
 }
 
 copy() {
@@ -66,11 +66,11 @@ update_files $DEV_ENV/env/.local $HOME/.local
 copy $DEV_ENV/tmux-sessionizer/tmux-sessionizer $HOME/.local/scripts/tmux-sessionizer
 copy $DEV_ENV/env/.zsh_profile $HOME/.zsh_profile
 copy $DEV_ENV/env/.zshrc $HOME/.zshrc
-copy $DEV_ENV/env/.xprofile $HOME/.xprofile
 copy $DEV_ENV/env/.tmux-sessionizer $HOME/.tmux-sessionizer
-copy $DEV_ENV/dev-env $HOME/.local/scripts/dev-env
+[ -f $DEV_ENV/env/.Xresources ] && copy $DEV_ENV/env/.Xresources $HOME/.Xresources
+[ -f $DEV_ENV/env/.gtkrc-2.0 ] && copy $DEV_ENV/env/.gtkrc-2.0 $HOME/.gtkrc-2.0
 
-# Provide the permission
-sudo chmod +x ~/.local/scripts/*
-chmod +x ~/.config/polybar/launch.sh
-chmod +x ~/.config/polybar/scripts/*
+# Provide permissions
+chmod +x $HOME/.local/scripts/* 2>/dev/null || true
+chmod +x $HOME/.config/polybar/launch.sh 2>/dev/null || true
+chmod +x $HOME/.config/polybar/scripts/* 2>/dev/null || true

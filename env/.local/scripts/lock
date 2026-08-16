@@ -1,5 +1,14 @@
-#!/bin/bash
-# Lock screen — uses betterlockscreen (Catppuccin Mocha, dimblur effect)
-# Run `betterlockscreen -u ~/Pictures/wallpapers/wallpaper.jpg` once after
-# changing wallpaper to refresh the cached lock image.
-betterlockscreen -l dimblur
+#!/usr/bin/env bash
+# =============================================================================
+# Lock Screen — Tokyo Night Aesthetic (betterlockscreen dimblur / i3lock fallback)
+# =============================================================================
+
+if command -v betterlockscreen &>/dev/null; then
+    betterlockscreen -l dimblur -- --time-str="%I:%M %p" --date-str="%A, %B %d"
+elif [ -f "$HOME/Pictures/wallpapers/wallpaper.jpg" ]; then
+    i3lock -i "$HOME/Pictures/wallpapers/wallpaper.jpg"
+elif [ -f "$HOME/Pictures/wallpaper.jpg" ]; then
+    i3lock -i "$HOME/Pictures/wallpaper.jpg"
+else
+    i3lock -c 1a1b26
+fi
