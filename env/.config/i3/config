@@ -259,3 +259,14 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
+
+# ── Applications ─────────────────────────────────────────────────────────────
+
+# Chrome
+bindsym $mod+c exec --no-startup-id google-chrome-stable
+
+# Brave
+bindsym $mod+b exec --no-startup-id brave-browser
+
+# File manager
+bindsym $mod+n exec --no-startup-id nautilus
