@@ -1,1 +1,1 @@
-# my_setup
+# My Setup on Omarchy
