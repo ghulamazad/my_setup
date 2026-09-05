@@ -1,0 +1,3 @@
+[submodule "env/nvim"]
+	path = env/nvim
+	url = git@github.com:ghulamazad/nvim.git
