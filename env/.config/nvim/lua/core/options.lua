@@ -59,7 +59,7 @@ opt.termguicolors = true
 -- Reduce visual noise: no wrap for code, show invisible chars deliberately
 opt.wrap = false
 opt.list = true
-opt.listchars = { tab = "", trail = "·", nbsp = "␣" }
+opt.listchars = { tab = " ", trail = "·", nbsp = "␣" }
 
 -- Command-line height: 1 is enough, keeps more code visible
 opt.cmdheight = 1
