@@ -87,29 +87,6 @@
     # Sort version tags naturally: v1.2.0 before v1.10.0.
     sort = version:refname
 
-
-# ── SSH signing ────────────────────────────────────────────────────────────────
-#
-# Configure these in ~/.config/git/local.
-#
-# Example:
-#
-# [user]
-#     signingkey = key::ssh-ed25519 AAAA...
-#
-# [gpg]
-#     format = ssh
-#
-# [gpg "ssh"]
-#     allowedSignersFile = ~/.config/git/allowed_signers
-#
-# [commit]
-#     gpgsign = true
-#
-# [tag]
-#     gpgsign = true
-
-
 # ── GitHub URL rewrite ────────────────────────────────────────────────────────
 [url "git@github.com:"]
     # Convert GitHub HTTPS URLs to SSH automatically.
