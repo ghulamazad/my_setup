@@ -1,76 +1,74 @@
--- lua/plugins/completion.lua
--- blink.cmp: modern, blazing-fast completion written in Rust.
--- Replaces nvim-cmp. Handles sources, snippets, and LSP protocol extensions.
-
 return {
-    {
-        "saghen/blink.cmp",
-        version      = "*",       -- use latest stable release build
-        event        = "InsertEnter",
-        dependencies = {
-            -- Snippet engine (LuaSnip for complex snippet bodies)
-            { "L3MON4D3/LuaSnip", version = "v2.*" },
-        },
-        opts = {
-            -- ── Keymap preset ─────────────────────────────────────────────────
-            -- "default": Tab/S-Tab to navigate, Enter to confirm, C-space to
-            -- open menu explicitly, C-e to close.
-            keymap = { preset = "default" },
+  "saghen/blink.cmp",
+  event = "InsertEnter", -- lazy-load: no cost until you actually start typing
+  version = "1.*",       -- pin to major version — blink's config schema
+                          -- occasionally has breaking changes between majors
+  dependencies = {
+    -- Snippet engine blink uses under the hood for LSP snippet
+    -- expansion (function args, boilerplate from jdtls code actions, etc.)
+    "rafamadriz/friendly-snippets",
+  },
 
-            -- ── Appearance ────────────────────────────────────────────────────
-            appearance = {
-                -- Use Nerd Font icons for kind labels (matches your lualine setup)
-                use_nvim_cmp_as_default = false,
-                nerd_font_variant = "mono",
-            },
+  opts = {
+    keymap = {
+      -- "default" preset = mostly-standard, Tab-based, minimal surprise.
+      -- We override the two entries below that matter most for
+      -- preserving Vim-native feel.
+      preset = "default",
 
-            -- ── Sources ───────────────────────────────────────────────────────
-            sources = {
-                default = { "lsp", "path", "snippets", "buffer" },
-                -- Score modifier: LSP items rank above buffer text matches
-                providers = {
-                    lsp     = { score_offset = 5 },
-                    snippets = { score_offset = 3 },
-                },
-            },
+      -- Enter only confirms an EXPLICITLY selected item, never the
+      -- first item by default — this is the single most important
+      -- setting for people who don't want completion to "hijack"
+      -- normal typing/newlines.
+      ["<CR>"] = { "accept", "fallback" },
 
-            -- ── Snippets ──────────────────────────────────────────────────────
-            snippets = {
-                preset = "luasnip",
-            },
+      -- Tab/S-Tab cycle the menu; falls through to normal Tab
+      -- behavior (indent) when the menu isn't open.
+      ["<Tab>"] = { "select_next", "fallback" },
+      ["<S-Tab>"] = { "select_prev", "fallback" },
 
-            -- ── Completion behaviour ──────────────────────────────────────────
-            completion = {
-                -- Show documentation popup automatically beside the menu
-                documentation = {
-                    auto_show = true,
-                    auto_show_delay_ms = 200,
-                    window = { border = "rounded" },
-                },
-                -- Ghost text (inline preview of the top suggestion)
-                ghost_text = { enabled = true },
-                menu = {
-                    border = "rounded",
-                    draw = {
-                        -- Compact: icon + label + kind (no source column)
-                        columns = { { "kind_icon" }, { "label", gap = 1 }, { "kind" } },
-                    },
-                },
-            },
+      -- Ctrl-Space manually triggers completion (standard across
+      -- basically every editor — keeps muscle memory portable)
+      ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
 
-            -- ── Signature help ────────────────────────────────────────────────
-            signature = {
-                enabled = true,
-                window  = { border = "rounded" },
-            },
-
-            -- ── Fuzzy matching ────────────────────────────────────────────────
-            fuzzy = {
-                -- Use the Rust-powered prebuilt binary for maximum speed
-                use_typo_resistance = true,
-                use_frecency        = true,
-                use_proximity       = true,
-            },
-        },
+      -- Escape always closes the menu without touching insert mode —
+      -- native Vim Esc behavior stays completely untouched otherwise
+      ["<Esc>"] = { "hide", "fallback" },
     },
+
+    appearance = {
+      nerd_font_variant = "mono", -- matches JetBrainsMono Nerd Font you already use
+    },
+
+    -- Sources: where completion candidates come from, in priority order
+    sources = {
+      default = { "lsp", "path", "snippets", "buffer" },
+    },
+
+    completion = {
+      -- Documentation popup (shows Javadoc/godoc/docstring for the
+      -- highlighted item) — auto-opens after a short delay, not instantly,
+      -- so it doesn't flash on every cursor move through the menu
+      documentation = {
+        auto_show = true,
+        auto_show_delay_ms = 200,
+      },
+      -- Ghost text: shows the top completion inline (dimmed) as you
+      -- type, like an inline preview — off here, because combined
+      -- with LSP inlay hints (Stage 3) it gets visually busy fast.
+      -- Turn on later if you want it: ghost_text = { enabled = true }
+      menu = {
+        border = "rounded",
+      },
+    },
+
+    signature = {
+      -- Function signature help popup while typing arguments —
+      -- critical for Java/Spring (long constructor/method signatures)
+      -- and Go (multiple return values)
+      enabled = true,
+      window = { border = "rounded" },
+    },
+  },
+  opts_extend = { "sources.default" },
 }
