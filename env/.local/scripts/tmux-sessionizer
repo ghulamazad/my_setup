@@ -23,12 +23,10 @@ CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/tmux-sessionizer/config"
 [[ -f "$CONFIG_FILE" ]] && source "$CONFIG_FILE"
 
 # Safe default initialization (under set -u)
-[[ "${TS_ROOT_PATHS+set}" ]] || TS_ROOT_PATHS=("$HOME/Projects" "$HOME/Alien")
+[[ "${TS_ROOT_PATHS+set}" ]] || TS_ROOT_PATHS=("$HOME/Projects" "$HOME/Work")
 [[ "${TS_SEARCH_PATHS+set}" ]] || TS_SEARCH_PATHS=(
     "$HOME/Projects:1"
-    "$HOME/Alien:1"
-    "$HOME/Alien/coding-lab:1"
-    "$HOME/Alien/coding-labs:1"
+    "$HOME/Work:1"
 )
 [[ "${TS_EXTRA_SEARCH_PATHS+set}" ]] || TS_EXTRA_SEARCH_PATHS=()
 [[ "${TS_MAX_DEPTH+set}" ]] || TS_MAX_DEPTH=1

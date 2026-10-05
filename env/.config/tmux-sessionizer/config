@@ -3,8 +3,7 @@
 
 # ── Root project directories (appear directly in the picker) ──────────────────
 TS_ROOT_PATHS=(
-    "$HOME/Projects"
-    "$HOME/Alien"
+    "$HOME/Alien/coding-lab"
 )
 
 # ── Search paths (scanned for project subdirectories) ─────────────────────────
@@ -12,8 +11,7 @@ TS_ROOT_PATHS=(
 TS_SEARCH_PATHS=(
     "$HOME/Projects:1"
     "$HOME/Alien:1"
-    "$HOME/Alien/coding-lab:1"
-    "$HOME/Alien/coding-labs:1"
+    "$HOME/Alien/coding-lab:2"
 )
 
 # Default max depth for search paths without explicit depth suffix
