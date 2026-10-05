@@ -1,116 +1,125 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# ~/.zshrc – main zsh configuration
+# Target: interactive startup < 100 ms.  No framework, no plugin manager.
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+# ── Environment ────────────────────────────────────────────────────────────────
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+export EDITOR="nvim"
+export VISUAL="nvim"
+export PAGER="less"
+export LESS="-RFX"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"  # man pages via bat
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+# Prefer XDG paths for common tools
+export HISTFILE="${XDG_DATA_HOME}/zsh/history"
+export GOPATH="${HOME}/go"
+export GOBIN="${GOPATH}/bin"
+export CARGO_HOME="${XDG_DATA_HOME}/cargo"
+export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
+export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
+export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+# ── PATH (order matters: user bins first) ─────────────────────────────────────
+path=(
+    "${HOME}/.local/bin"
+    "${HOME}/.local/scripts"
+    "${GOBIN}"
+    "${CARGO_HOME}/bin"
+    "$path[@]"
+)
+export PATH
 
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+# ── History ────────────────────────────────────────────────────────────────────
+HISTSIZE=100000
+SAVEHIST=100000
+mkdir -p "$(dirname "$HISTFILE")"
 
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+setopt HIST_IGNORE_DUPS      # no consecutive duplicates
+setopt HIST_IGNORE_ALL_DUPS  # deduplicate across sessions
+setopt HIST_FIND_NO_DUPS     # skip dups in history search
+setopt HIST_SAVE_NO_DUPS     # don't write dups to file
+setopt HIST_REDUCE_BLANKS    # trim extra whitespace
+setopt INC_APPEND_HISTORY    # write immediately, not on shell exit
+setopt SHARE_HISTORY         # read shared history from all sessions
 
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
+# ── Options ────────────────────────────────────────────────────────────────────
+setopt AUTO_PUSHD            # cd pushes to directory stack
+setopt PUSHD_IGNORE_DUPS     # no duplicate dirs on stack
+setopt PUSHD_SILENT          # quiet pushd
+setopt CORRECT               # spell-correct commands
+setopt NO_BEEP               # silence
+setopt INTERACTIVE_COMMENTS  # allow # comments in interactive shell
+setopt GLOB_DOTS             # include dotfiles in globs
 
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
+# ── Completion ─────────────────────────────────────────────────────────────────
+# Once-a-day full rebuild; setopt extendedglob scoped to just this check.
+autoload -Uz compinit
 
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
+_zcompdump="${XDG_CACHE_HOME}/zsh/zcompdump-${ZSH_VERSION}"
+mkdir -p "$(dirname "$_zcompdump")"
 
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+{
+    setopt extendedglob
+    # Rebuild if dump is older than 20 hours (~once daily).
+    if [[ -n "${_zcompdump}"(#qN.mh+20) ]]; then
+        compinit -d "$_zcompdump"
+    else
+        compinit -C -d "$_zcompdump"
+    fi
+    unsetopt extendedglob
+} 2>/dev/null
 
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+# Completion styling
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
+zstyle ':completion:*:warnings' format '%F{red}No matches for:%f %d'
 
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
+# ── mise (runtime version manager) ─────────────────────────────────────────────
+# Activate shims; must come before anything that calls node/go/python.
+if command -v mise &>/dev/null; then
+    eval "$(mise activate zsh)"
+fi
 
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+# ── zoxide (smart cd) ──────────────────────────────────────────────────────────
+if command -v zoxide &>/dev/null; then
+    eval "$(zoxide init zsh --cmd cd)"  # replaces cd with zoxide
+fi
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+# ── starship prompt ────────────────────────────────────────────────────────────
+if command -v starship &>/dev/null; then
+    eval "$(starship init zsh)"
+fi
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+# ── Load sub-configs ───────────────────────────────────────────────────────────
+for _f in "${XDG_CONFIG_HOME:-$HOME/.config}/../.zsh/"*.zsh; do
+    # Use ZDOTDIR-relative path (files live at ~/.zsh/)
+    :
+done
 
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+for _f in "${HOME}/.zsh/"*.zsh; do
+    [[ -r "$_f" ]] && source "$_f"
+done
+unset _f
 
-source $ZSH/oh-my-zsh.sh
+# ── Plugins (sourced last – highest startup cost) ─────────────────────────────
+# zsh-autosuggestions: fish-style inline history completion
+_zas="/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+[[ -r "$_zas" ]] && source "$_zas"
+unset _zas
 
-# User configuration
+# zsh-syntax-highlighting: real-time command coloring (must be last)
+_zsh_hl="/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+[[ -r "$_zsh_hl" ]] && source "$_zsh_hl"
+unset _zsh_hl
 
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-source ~/.zsh_profile
-
-# bun completions
-# [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# Bun
-# export BUN_INSTALL="$HOME/.bun"
-# export PATH="$BUN_INSTALL/bin:$PATH"
-
-# pnpm
-# export PNPM_HOME="$HOME/.local/share/pnpm"
-# export PATH="$PNPM_HOME:$PATH"
-# # pnpm end
-# # Turso
-# export PATH="$HOME/.turso:$PATH"
+# ── Key bindings ──────────────────────────────────────────────────────────────
+bindkey -e                              # emacs keys (works well with readline)
+bindkey '^[[A' history-search-backward  # up arrow: history search
+bindkey '^[[B' history-search-forward   # down arrow
+bindkey '^[[1;5C' forward-word          # ctrl+right
+bindkey '^[[1;5D' backward-word         # ctrl+left
+bindkey -s '^f' "tmux-sessionizer\n"    # ctrl+f

@@ -1,0 +1,18 @@
+# ============================================================
+# feh — clean professional themes
+# ============================================================
+
+# Normal image viewing
+clean --scale-down --auto-zoom --hide-pointer --image-bg black
+
+# Fullscreen presentation
+present --fullscreen --scale-down --auto-zoom --hide-pointer --image-bg black
+
+# Minimal / distraction-free
+minimal --scale-down --auto-zoom --hide-pointer --image-bg black --no-menus
+
+# Slideshow
+slideshow --fullscreen --scale-down --auto-zoom --hide-pointer --image-bg black --slideshow-delay 5
+
+# Image information
+info --scale-down --auto-zoom --hide-pointer --image-bg black --draw-filename

@@ -1,0 +1,10 @@
+# ─── aur.txt ────────────────────────────────────────────────────────────────
+# AUR packages.  Same format as packages.txt.
+# Installed via: yay -S --needed --noconfirm
+#
+# Kept minimal – prefer official-repo equivalents when they exist.
+# ────────────────────────────────────────────────────────────────────────────
+
+# Currently empty – all required packages are in the official repos.
+# Add AUR packages here if/when needed.  Example:
+#   some-aur-pkg    # why it's needed and why there's no official alternative

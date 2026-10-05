@@ -1,10 +1,25 @@
 #!/usr/bin/env bash
+# ~/.tmux-sessionizer – session hydration hook
+# Sourced automatically when tmux-sessionizer creates a new tmux session.
+# Can also be executed directly: ~/.tmux-sessionizer
 
-if [[ "$(pwd)" == $HOME/Alien ]]; then
+# ── Skip auto-editor on root parent directories ──────────────────────────────
+if [[ "$PWD" == "$HOME" || "$PWD" == "$HOME/Alien" || "$PWD" == "$HOME/Projects" ]]; then
     clear
-    return
+    return 0 2>/dev/null || exit 0
 fi
-tmux new-window -dn scratch
-vim .
-clear
 
+# ── Create background scratch window if not already present ───────────────────
+if ! tmux list-windows -F "#{window_name}" 2>/dev/null | grep -qxF "scratch"; then
+    tmux new-window -dn scratch -c "$PWD"
+fi
+
+# ── Launch editor in active window ───────────────────────────────────────────
+if command -v nvim &>/dev/null; then
+    nvim .
+elif command -v vim &>/dev/null; then
+    vim .
+fi
+
+clear
+return 0 2>/dev/null || exit 0

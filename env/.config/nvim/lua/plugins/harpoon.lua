@@ -1,36 +1,75 @@
+-- lua/plugins/harpoon.lua
+-- harpoon2: per-project file bookmarks with instant indexed access.
+-- Ideal for backend work: jump between main.go, handler, service, and test
+-- with a single keystroke instead of fuzzy-searching each time.
+--
+-- Keymaps:
+--   <leader>ha  → add current file to harpoon list
+--   <leader>hh  → open harpoon menu (pick/reorder/remove)
+--   <C-1..4>    → jump directly to slots 1-4
+
 return {
-  "ThePrimeagen/harpoon",
-  branch = "harpoon2",
-  dependencies = { "nvim-lua/plenary.nvim" },
-  event = "VeryLazy",
-  config = function()
-    local harpoon = require("harpoon")
-    harpoon:setup()
+    {
+        "ThePrimeagen/harpoon",
+        branch       = "harpoon2",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        keys = function()
+            local harpoon = require("harpoon")
 
-    local keymap = vim.keymap.set
-
-    -- Add current file to the harpoon list
-    keymap("n", "<leader>ha", function() harpoon:list():add() end,
-      { desc = "Harpoon: add file" })
-
-    -- Toggle the quick-menu (shows your marked files, editable as a
-    -- normal buffer — delete a line to remove that mark, reorder
-    -- lines to reorder the list)
-    keymap("n", "<leader>hh", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
-      { desc = "Harpoon: menu" })
-
-    -- Direct-jump to slots 1-4 — this is the actual speed win: no
-    -- picker, no visual scan, just "jump to my 2nd marked file" in
-    -- one keystroke combo. 1-4 covers the realistic working-set size
-    -- for a single feature/task (e.g. Controller/Service/Repo/Test).
-    keymap("n", "<leader>1", function() harpoon:list():select(1) end, { desc = "Harpoon file 1" })
-    keymap("n", "<leader>2", function() harpoon:list():select(2) end, { desc = "Harpoon file 2" })
-    keymap("n", "<leader>3", function() harpoon:list():select(3) end, { desc = "Harpoon file 3" })
-    keymap("n", "<leader>4", function() harpoon:list():select(4) end, { desc = "Harpoon file 4" })
-
-    -- Cycle through the harpoon list specifically (not all buffers —
-    -- only the ones you've deliberately marked)
-    keymap("n", "<C-S-P>", function() harpoon:list():prev() end, { desc = "Harpoon: prev" })
-    keymap("n", "<C-S-N>", function() harpoon:list():next() end, { desc = "Harpoon: next" })
-  end,
+            return {
+                -- Add file
+                {
+                    "<leader>ha",
+                    function() harpoon:list():add() end,
+                    desc = "Harpoon: add file",
+                },
+                -- Open UI
+                {
+                    "<leader>hh",
+                    function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
+                    desc = "Harpoon: menu",
+                },
+                -- Slot 1-4: instant jump (no prefix, muscle memory target)
+                {
+                    "<C-1>",
+                    function() harpoon:list():select(1) end,
+                    desc = "Harpoon: file 1",
+                },
+                {
+                    "<C-2>",
+                    function() harpoon:list():select(2) end,
+                    desc = "Harpoon: file 2",
+                },
+                {
+                    "<C-3>",
+                    function() harpoon:list():select(3) end,
+                    desc = "Harpoon: file 3",
+                },
+                {
+                    "<C-4>",
+                    function() harpoon:list():select(4) end,
+                    desc = "Harpoon: file 4",
+                },
+                -- Cycle previous/next in list (useful when list > 4)
+                {
+                    "<leader>h[",
+                    function() harpoon:list():prev() end,
+                    desc = "Harpoon: prev",
+                },
+                {
+                    "<leader>h]",
+                    function() harpoon:list():next() end,
+                    desc = "Harpoon: next",
+                },
+            }
+        end,
+        config = function()
+            require("harpoon"):setup({
+                settings = {
+                    save_on_toggle = true,
+                    sync_on_ui_close = true,
+                },
+            })
+        end,
+    },
 }

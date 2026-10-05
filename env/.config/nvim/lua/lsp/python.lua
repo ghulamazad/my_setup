@@ -1,24 +1,28 @@
+-- lua/lsp/python.lua
+-- pyright + ruff. Both installed via pacman (system-wide).
+-- Mason does NOT manage these. Mason handles DAP (debugpy) only.
+
+-- pyright: type checker / IntelliSense
 vim.lsp.config("pyright", {
-  settings = {
-    pyright = {
-      -- Let ruff own diagnostics entirely — avoids duplicate warnings
-      disableOrganizeImports = true,
+    settings = {
+        pyright = {
+            -- ruff owns import organisation; disable pyright's to avoid duplicate actions.
+            disableOrganizeImports = true,
+        },
+        python = {
+            analysis = {
+                typeCheckingMode      = "basic",  -- "strict" available if you want it
+                autoImportCompletions = true,
+            },
+        },
     },
-    python = {
-      analysis = {
-        typeCheckingMode = "basic", -- "strict" is available if you want it later
-        autoImportCompletions = true,
-      },
-    },
-  },
 })
 
+-- ruff: fast linter + import organiser (complements pyright, doesn't replace it)
 vim.lsp.config("ruff", {
-  init_options = {
-    settings = {
-      -- ruff handles linting; we let it organize imports too since
-      -- pyright's own import-organizer is disabled above
-      organizeImports = true,
+    init_options = {
+        settings = {
+            organizeImports = true,
+        },
     },
-  },
 })

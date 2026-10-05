@@ -1,0 +1,100 @@
+# ─── packages.txt ───────────────────────────────────────────────────────────
+# Official-repo packages.  One per line.  Blank lines and lines starting with
+# '#' are ignored by install-packages.sh.
+#
+# Strategy: check if already installed (pacman -Qi) – install only what's missing.
+# All of these are official Arch packages. AUR extras are in aur.txt.
+# ────────────────────────────────────────────────────────────────────────────
+
+# ── Shell ─────────────────────────────────────────────────────────────────────
+zsh                         # target shell
+zsh-autosuggestions         # fish-style inline history suggestions
+zsh-syntax-highlighting     # real-time command coloring
+zsh-completions             # community completion scripts
+
+# ── Terminal / multiplexer ───────────────────────────────────────────────────
+ghostty                     # GPU-accelerated terminal emulator (Wayland-native)
+tmux                        # terminal multiplexer with persistent sessions
+
+# ── Editor ───────────────────────────────────────────────────────────────────
+neovim                      # primary editor (0.11+, native LSP)
+
+# ── Fuzzy / navigation ───────────────────────────────────────────────────────
+fzf                         # fuzzy finder used in shell, nvim, scripts
+fd                          # faster find – default source for fzf/telescope
+ripgrep                     # fast grep; used by telescope live_grep and shell
+zoxide                      # smarter cd with frecency ranking
+
+# ── File viewers ─────────────────────────────────────────────────────────────
+bat                         # cat with syntax highlighting + line numbers (fzf preview)
+eza                         # modern ls with git status, icons, and tree view
+glow                        # render markdown in terminal (README review, docs)
+
+# ── Prompt ───────────────────────────────────────────────────────────────────
+starship                    # cross-shell prompt with per-project context
+
+# ── Version / toolchain manager ──────────────────────────────────────────────
+mise                        # polyglot runtime manager (Go, Node, Python, …)
+
+# ── Git ──────────────────────────────────────────────────────────────────────
+git                         # VCS
+lazygit                     # TUI Git client for fast interactive staging/rebasing
+git-delta                   # syntax-highlighted diffs (pager; used by git core.pager)
+
+# ── Go tooling (pacman-owned; see CHANGES.md for ownership rationale) ────────
+go                          # Go compiler and stdlib
+gopls                       # Go language server
+gofumpt                     # stricter gofmt (enforced by conform.nvim)
+delve                       # Go debugger – nvim-dap invokes dlv from PATH
+golangci-lint               # meta-linter (staticcheck, errcheck, unused, …)
+
+# ── Rust tooling ─────────────────────────────────────────────────────────────
+rust                        # rustc + cargo (includes rustfmt, clippy)
+rust-analyzer               # Rust language server
+
+# ── Python tooling ───────────────────────────────────────────────────────────
+python                      # Python 3 interpreter
+pyright                     # Python type-checker / language server
+python-pip                  # pip (needed for mise python integration)
+ruff                        # Python linter + formatter (replaces flake8/black for speed)
+python-black                # Python formatter (kept alongside ruff; used by some projects)
+
+# ── Lua tooling (for editing Neovim config) ──────────────────────────────────
+lua-language-server         # Lua LSP
+stylua                      # Lua formatter
+
+# ── C/C++ tooling (competitive programming) ──────────────────────────────────
+gcc                         # C/C++ compiler (cp: g++)
+clang                       # clang + clang-format
+gdb                         # debugger (fallback from codelldb in DAP)
+
+# ── Node / TypeScript tooling ────────────────────────────────────────────────
+# Note: vtsls (TS language server) is Mason-owned – NOT here.
+nodejs                      # Node runtime (also managed via mise for per-project)
+npm                         # npm (bootstraps npx and global tools)
+prettier                    # JS/TS/JSON/YAML/Markdown formatter
+
+# ── Media ─────────────────────────────────────────────────────────────────────
+mpv                         # video/audio player (configured in mpv/ package)
+
+# ── Utilities ─────────────────────────────────────────────────────────────────
+jq                          # JSON processor – query APIs, parse CI output
+yq                          # YAML/TOML/XML processor (jq for YAML)
+wl-clipboard                # Wayland clipboard (wl-copy / wl-paste)
+xdg-utils                   # xdg-open for browser/URL associations
+xh                          # HTTPie-like HTTP client (fast, modern, curl alternative)
+rsync                       # efficient file sync (local backup, server copy)
+htop                        # interactive process viewer
+dust                        # du replacement – disk usage with intuitive tree
+tokei                       # count lines of code by language
+hyperfine                   # CLI benchmarking tool (compare command speeds)
+entr                        # run arbitrary commands on file change (watch mode)
+difftastic                  # structural diff (understands AST, not just text)
+
+# ── Infrastructure ────────────────────────────────────────────────────────────
+docker                      # container runtime
+docker-compose              # multi-container compose
+openssh                     # ssh client/server + ssh-agent
+
+# ── Fonts ─────────────────────────────────────────────────────────────────────
+ttf-jetbrains-mono-nerd     # dev font with Nerd Font icons (ghostty, nvim, tmux)

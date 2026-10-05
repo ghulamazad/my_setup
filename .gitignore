@@ -1,0 +1,21 @@
+# dotfiles repo – never commit secrets or local machine state
+*.swp
+*.swo
+.DS_Store
+
+# Editor sessions
+.netrwhist
+Session.vim
+
+# Backup artefacts produced by install-config.sh – stay on the machine, not in git
+.dotfiles-backup/
+
+# Local machine identity – never committed
+git/.config/git/local
+
+# Compiled / generated
+__pycache__/
+*.pyc
+*.pyo
+node_modules/
+.cache/

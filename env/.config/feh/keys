@@ -1,0 +1,47 @@
+# ============================================================
+# feh — Vim-style image viewer
+# ============================================================
+
+# -------------------- Image navigation ---------------------
+
+next_img        l Right
+prev_img        h Left BackSpace
+
+# -------------------- Zoom ---------------------------------
+
+zoom_in         z
+zoom_out        x
+zoom_default    1
+zoom_fit        0
+
+# -------------------- Pan / move image ---------------------
+
+scroll_up      w Up
+scroll_down    s Down
+scroll_left    a Left
+scroll_right   d Right
+
+# -------------------- Viewer --------------------------------
+
+toggle_fullscreen    f
+toggle_filenames     i
+reload               r
+
+# -------------------- Rotation ------------------------------
+
+rotate_clockwise          ]
+rotate_counterclockwise   [
+
+# -------------------- Slideshow -----------------------------
+
+slideshow        Space
+
+
+# -------------------- Quit ----------------------------------
+
+quit               q Escape
+
+# -------------------- Disable dangerous/unwanted defaults --
+
+save_image
+save_filelist

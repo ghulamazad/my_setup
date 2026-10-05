@@ -1,42 +1,58 @@
+-- lua/lsp/go.lua
+-- gopls configuration. gopls is installed via pacman (system-wide).
+-- Mason does NOT manage gopls — no double installation.
+
 vim.lsp.config("gopls", {
-  settings = {
-    gopls = {
-      -- staticcheck is a stricter linter than gopls' built-in analysis
-      -- (catches more real bugs: unused struct fields, etc.)
-      staticcheck = true,
+    settings = {
+        gopls = {
+            -- staticcheck: stricter analysis than gopls built-in (catches unused fields etc.)
+            staticcheck = true,
 
-      -- Inlay hints: parameter names + inferred types. Off globally by
-      -- default (Stage 2's toggle), but when you DO turn it on, these
-      -- sub-flags control exactly which hints appear — kept minimal
-      -- and useful rather than showing everything gopls can show.
-      hints = {
-        assignVariableTypes = true,
-        compositeLiteralFields = true,
-        constantValues = true,
-        parameterNames = true,
-        rangeVariableTypes = true,
-      },
+            -- gofumpt: enforces stricter formatting on top of gofmt.
+            -- Does NOT organize imports — that is a separate code action below.
+            gofumpt = true,
 
-      -- Organizes imports automatically as part of gofumpt-style formatting
-      gofumpt = true, -- stricter superset of gofmt — catches more style issues
+            analyses = {
+                unusedparams = true,
+                shadow       = true,
+            },
 
-      -- Enables gopls' built-in "unused parameter/variable" analysis
-      analyses = {
-        unusedparams = true,
-        shadow = true,
-      },
+            -- usePlaceholders: function args become tab-stops on completion
+            usePlaceholders = true,
 
-      usePlaceholders = true, -- function args become tab-stops on completion
+            -- Inlay hints: off globally, toggled per-buffer with <leader>ih
+            hints = {
+                assignVariableTypes    = true,
+                compositeLiteralFields = true,
+                constantValues         = true,
+                parameterNames         = true,
+                rangeVariableTypes     = true,
+            },
+        },
     },
-  },
 })
 
--- gofmt/goimports on save — native autocmd, no plugin needed.
--- We use LSP formatting (gopls implements gofumpt) rather than a
--- separate formatter runner, since gopls already does this correctly.
+-- On save: organise imports THEN format. Two separate LSP requests.
+-- gopls does not combine them — order matters (organise first, then format).
 vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*.go",
-  callback = function()
-    vim.lsp.buf.format({ async = false })
-  end,
+    pattern  = "*.go",
+    callback = function(args)
+        local client = vim.lsp.get_clients({ bufnr = args.buf, name = "gopls" })[1]
+        if not client then return end
+
+        -- 1. Organise imports
+        local params   = vim.lsp.util.make_range_params(0, client.offset_encoding)
+        params.context = { only = { "source.organizeImports" } }
+        local res      = vim.lsp.buf_request_sync(args.buf, "textDocument/codeAction", params, 1000)
+        for _, r in pairs(res or {}) do
+            for _, action in pairs(r.result or {}) do
+                if action.edit then
+                    vim.lsp.util.apply_workspace_edit(action.edit, client.offset_encoding)
+                end
+            end
+        end
+
+        -- 2. Format (gofumpt via gopls)
+        vim.lsp.buf.format({ async = false })
+    end,
 })
