@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 # bootstrap.sh – Full machine setup in one command.
 #
 # Runs:  1. install-packages.sh

@@ -1,22 +1,4 @@
-#!/usr/bin/env bash
 # install-config.sh – Deploy dotfiles from env/ into $HOME.
-#
-# Structure: env/ is an exact mirror of $HOME.
-#   env/.zshrc              → ~/.zshrc
-#   env/.zsh/aliases.zsh    → ~/.zsh/aliases.zsh
-#   env/.config/nvim/       → ~/.config/nvim/
-#   env/.config/tmux/       → ~/.config/tmux/
-#   env/.local/bin/         → ~/.local/bin/   (chmod +x applied)
-#   ... and so on.
-#
-# No routing tables, no per-package logic. env/ IS $HOME.
-#
-# Behaviour:
-#   - Copies (default) or symlinks (--symlink) every file.
-#   - Overwrites destination if content differs — env/ is the source of truth.
-#   - Skips identical files (sha256 match) — safe to run multiple times.
-#   - Never touches protected paths (.config/hypr, .config/omarchy, .ssh, .gnupg).
-#   - Files inside .local/bin/ are always made executable.
 #
 # Usage:
 #   ./install-config.sh               – deploy all files
@@ -77,7 +59,7 @@ install_file() {
 
     # Safety
     if is_protected "$dst"; then
-        warn "Protected – skipping: $dst"
+        warn "Protected - skipping: $dst"
         return 0
     fi
 
@@ -89,7 +71,7 @@ install_file() {
             else
                 mkdir -p "$(dirname "$dst")"
                 cat > "$dst" <<'EOF'
-# ~/.config/git/local – machine identity (never committed to the repo)
+# ~/.config/git/local - machine identity (never committed to the repo)
 [user]
     name  =
     email =
@@ -149,7 +131,7 @@ EOF
 
 echo ""
 log "install-config.sh  (source: env/ → \$HOME)"
-$DRY_RUN && log "DRY RUN – no changes will be made"
+$DRY_RUN && log "DRY RUN - no changes will be made"
 $SYMLINK  && log "MODE: symlink" || log "MODE: copy"
 echo ""
 

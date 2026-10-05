@@ -1,4 +1,3 @@
-# ~/.zsh/aliases.zsh – shell aliases
 # Each alias has a one-line comment naming the problem it solves.
 # Guards prevent errors when optional tools are not installed.
 
@@ -9,16 +8,6 @@ alias ....='cd ../../..'
 alias -- -='cd -'                  # return to previous directory
 
 # ── ls → eza (modern ls with git status) ─────────────────────────────────────
-# if command -v eza &>/dev/null; then
-#     alias ls='eza --icons --group-directories-first'
-#     alias ll='eza -lah --icons --group-directories-first --git'
-#     alias lt='eza --tree --icons --level=2 --group-directories-first'
-#     alias la='eza -a --icons --group-directories-first'
-# else
-#     alias ll='ls -lAh'
-#     alias la='ls -A'
-# fi
-
 if command -v eza &>/dev/null; then
     alias ls='eza -lh --group-directories-first --icons=auto'
     alias lsa='ls -a'

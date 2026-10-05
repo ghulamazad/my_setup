@@ -1,4 +1,3 @@
-# ~/.zsh/fzf.zsh – fzf integration for the shell
 # Requires: fzf, fd, bat, eza
 
 # ── fzf defaults: fd for files, bat for previews ─────────────────────────────

@@ -1,6 +1,3 @@
-# ~/.zshrc – main zsh configuration
-# Target: interactive startup < 100 ms.  No framework, no plugin manager.
-
 # ── Environment ────────────────────────────────────────────────────────────────
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"

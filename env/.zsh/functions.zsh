@@ -1,4 +1,3 @@
-# ~/.zsh/functions.zsh – shell functions
 # Each function has a header comment naming the problem it solves.
 
 # ── mkcd: create directory and enter it ───────────────────────────────────────

@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 # ~/.tmux-sessionizer – session hydration hook
 # Sourced automatically when tmux-sessionizer creates a new tmux session.
 # Can also be executed directly: ~/.tmux-sessionizer
